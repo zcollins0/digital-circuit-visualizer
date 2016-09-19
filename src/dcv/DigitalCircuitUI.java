@@ -1,8 +1,11 @@
 package dcv;
 
+import java.util.ArrayList;
+
 public class DigitalCircuitUI {
 	
 	static Circuit circuit;
+	static ArrayList<Input> inputList;
 	
 	static void DoUI() {
 		
