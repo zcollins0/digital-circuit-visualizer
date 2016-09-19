@@ -1,5 +1,6 @@
 package dcv;
 
+// Class to implement an input. Should not have any children.
 class Input extends Gate {
 	
 	Input(Gate top, Gate bottom) {

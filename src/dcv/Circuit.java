@@ -1,5 +1,6 @@
 package dcv;
 
+// Class to represent a circuit. The UI can own multiple circuit instances.
 class Circuit {
 	// Notes to self:
 	// Best way to do this: make the circuit modular

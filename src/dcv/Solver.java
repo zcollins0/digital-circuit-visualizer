@@ -2,6 +2,8 @@ package dcv;
 
 import java.util.ArrayList;
 
+// Class to encapsulate the solving of a circuit
+// There should be one solver per circuit, and the circuit passed into the solver should be the one that owns it.
 public class Solver {
 	ArrayList<Input> inputs;
 	Circuit circuit;
