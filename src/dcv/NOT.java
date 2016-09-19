@@ -1,6 +1,6 @@
 package dcv;
 
-public class NOT extends Gate {
+class NOT extends Gate {
 
 	@Override
 	boolean isActive() {

@@ -1,6 +1,6 @@
 package dcv;
 
-public class NOR extends OR {
+class NOR extends OR {
 	
 	@Override
 	boolean isActive() {

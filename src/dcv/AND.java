@@ -1,6 +1,6 @@
 package dcv;
 
-public class AND extends Gate {
+class AND extends Gate {
 	
 	@Override
 	boolean isActive() {

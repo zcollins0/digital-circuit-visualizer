@@ -1,6 +1,6 @@
 package dcv;
 
-public class NAND extends AND {
+class NAND extends AND {
 	
 	@Override
 	boolean isActive() {
