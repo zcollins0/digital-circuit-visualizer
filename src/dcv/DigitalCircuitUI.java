@@ -2,7 +2,9 @@ package dcv;
 
 public class DigitalCircuitUI {
 	
-	public static void DoUI() {
+	static Circuit circuit;
+	
+	static void DoUI() {
 		
 	}
 
