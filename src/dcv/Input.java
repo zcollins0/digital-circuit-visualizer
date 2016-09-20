@@ -9,7 +9,7 @@ class Input extends Gate {
 		bottom = null;
 	}
 
-	boolean signal;
+	private boolean signal;
 	
 	@Override
 	boolean isActive() {

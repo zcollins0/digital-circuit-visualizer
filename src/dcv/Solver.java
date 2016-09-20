@@ -27,11 +27,11 @@ public class Solver {
 		int i;
 		for (i = 0; i < states.length; i++) {
 			if (i == inputs.size()) break;
-			inputs.get(i).signal = states[i];
+			inputs.get(i).setActive(states[i]);
 		}
 		if (i < inputs.size()) {
 			for (; i < inputs.size(); i++) {
-				inputs.get(i).signal = false;
+				inputs.get(i).setActive(false);
 			}
 		}
 		
