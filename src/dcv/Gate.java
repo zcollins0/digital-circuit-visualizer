@@ -6,6 +6,7 @@ package dcv;
 abstract class Gate {
 	
 	enum childPosition {
+		// TODO: Consider implementation for 3 input gate
 		POS_TOP,
 		POS_BOTTOM
 	}
