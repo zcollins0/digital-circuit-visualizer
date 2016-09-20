@@ -11,5 +11,10 @@ class NOT extends Gate {
 	boolean isActive() {
 		return (topChild != null) ? !topChild.isActive() : !bottomChild.isActive();
 	}
+	
+	@Override
+	void addChild(Gate g, childPosition pos) {
+		// Can only give one input to NOT
+	}
 
 }

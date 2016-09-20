@@ -16,6 +16,11 @@ class Input extends Gate {
 		return signal;
 	}
 	
+	@Override
+	void addChild(Gate g, childPosition pos) {
+		// Can't give a child to an input
+	}
+	
 	void setActive(boolean active) {
 		signal = active;
 	}
