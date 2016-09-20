@@ -15,7 +15,7 @@ class Circuit {
 	}
 	
 	void giveSolver() {
-		solver = new Solver(inputs, this);
+		solver = new Solver(this);
 	}
 	
 	void giveTop() {

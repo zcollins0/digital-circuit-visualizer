@@ -8,9 +8,10 @@ public class Solver {
 	ArrayList<Input> inputs;
 	Circuit circuit;
 	
-	Solver(ArrayList<Input> inputs, Circuit circuit) {
-		this.inputs = inputs;
+	// Constructor for Solver: takes inputs and circuit object
+	Solver(Circuit circuit) {
 		this.circuit = circuit;
+		inputs = circuit.inputs;
 	}
 	
 	void solveAll() {
