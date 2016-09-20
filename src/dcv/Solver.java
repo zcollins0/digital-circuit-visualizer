@@ -14,6 +14,7 @@ public class Solver {
 	}
 	
 	void solveAll() {
+		// TODO:
 		// Do all possible scenarios
 		// This part should use multithreading
 	}

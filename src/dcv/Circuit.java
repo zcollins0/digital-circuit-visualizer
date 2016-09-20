@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 // Class to represent a circuit. The UI can own multiple circuit instances.
 class Circuit {
-
+	
+	// TODO: Allow multiple top level gates
 	Gate top;
 	Solver solver;
 	ArrayList<Input> inputs;
