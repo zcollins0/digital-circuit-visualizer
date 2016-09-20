@@ -17,8 +17,8 @@ class Input extends Gate {
 	}
 	
 	@Override
-	void addChild(Gate g, childPosition pos) {
-		// Can't give a child to an input
+	void addChild(Gate g, childPosition pos)  throws InvalidNodeException {
+		throw new InvalidNodeException("Cannot give child to input.");
 	}
 	
 	void setActive(boolean active) {
