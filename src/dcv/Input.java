@@ -15,5 +15,9 @@ class Input extends Gate {
 	boolean isActive() {
 		return signal;
 	}
+	
+	void setActive(boolean active) {
+		signal = active;
+	}
 
 }
