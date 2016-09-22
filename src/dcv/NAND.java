@@ -1,5 +1,6 @@
 package dcv;
 
+// Two input NAND gate - active when no or one input is active
 class NAND extends AND {
 	
 	NAND(Gate top, Gate bottom) {
