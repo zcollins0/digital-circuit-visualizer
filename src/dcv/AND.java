@@ -1,5 +1,6 @@
 package dcv;
 
+// Two input AND gate - active when both of its inputs are high
 class AND extends Gate {
 	
 	AND(Gate top, Gate bottom) {
