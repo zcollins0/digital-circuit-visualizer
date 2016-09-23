@@ -28,5 +28,21 @@ abstract class Gate {
 		}
 	}
 	
+	void addInput() throws InvalidNodeException {
+		if (topChild != null) {
+			Input tempInput = new Input(null, null, "<TAG>");
+			topChild = tempInput;
+			DigitalCircuitUI.inputList.add(tempInput);
+		}
+		else if (bottomChild != null) {
+			Input tempInput = new Input(null, null, "<TAG>");
+			bottomChild = tempInput;
+			DigitalCircuitUI.inputList.add(tempInput);
+		}
+		else {
+			throw new InvalidNodeException("The selected gate is full.");
+		}
+	}
+	
 	abstract boolean isActive();
 }
