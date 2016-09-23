@@ -13,7 +13,7 @@ class NOT extends Gate {
 	}
 	
 	@Override
-	void addChild(Gate g, childPosition pos) throws InvalidNodeException {
+	void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (topChild != null || bottomChild != null) {
 			throw new InvalidNodeException("Inverter already has a child.");
 		}
