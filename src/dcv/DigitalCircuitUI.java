@@ -7,6 +7,10 @@ public class DigitalCircuitUI {
 	static Circuit circuit;
 	static ArrayList<Input> inputList;
 	
+	static void updateUI() {
+		// Call this when you need to redraw
+	}
+	
 	static void DoUI() {
 		// DoUI should initialize the UI, and call an update function.
 		// The structure of the circuit should be a horizontal tree.
@@ -15,6 +19,8 @@ public class DigitalCircuitUI {
 		// to represent wires connecting circuit components.
 		
 		// Maybe check out the "Placeable" object as well.
+		
+		updateUI();
 		
 	}
 

@@ -19,7 +19,7 @@ abstract class Gate {
 		bottomChild = bottom;
 	}
 	
-	void addChild(Gate g, childPosition pos) throws InvalidNodeException {
+	void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (pos == childPosition.POS_TOP) {
 			topChild = g;
 		}

@@ -3,10 +3,14 @@ package dcv;
 // Class to implement an input. Should not have any children.
 class Input extends Gate {
 	
-	Input(Gate top, Gate bottom) {
+	// The name of the input (A, B, C...)
+	String tag;
+	
+	Input(Gate top, Gate bottom, String tag) {
 		super(top, bottom);
 		top = null;
 		bottom = null;
+		this.tag = tag;
 	}
 
 	private boolean signal;
