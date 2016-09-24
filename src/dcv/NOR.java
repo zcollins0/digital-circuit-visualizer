@@ -1,7 +1,7 @@
 package dcv;
 
 // Two input NOR gate - active when no inputs are active
-class NOR extends OR {
+public class NOR extends OR {
 	
 	NOR(Gate top, Gate bottom) {
 		super(top, bottom);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class DigitalCircuitUI {
+class DigitalCircuitUI {
 	
 	static Circuit circuit;
 	static ArrayList<Input> inputList;

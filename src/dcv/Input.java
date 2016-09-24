@@ -2,7 +2,7 @@ package dcv;
 
 // Class to implement an input. Should not have any children.
 // The value of the input is explicitly set when solving the circuit.
-class Input extends Gate {
+public class Input extends Gate {
 	
 	// The name of the input (A, B, C...)
 	char tag;

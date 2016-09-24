@@ -3,7 +3,7 @@ package dcv;
 import java.util.ArrayList;
 
 // Class to represent a circuit. The UI can own multiple circuit instances.
-class Circuit {
+public class Circuit {
 	
 	// TODO: Allow multiple top level gates
 	Gate top;
