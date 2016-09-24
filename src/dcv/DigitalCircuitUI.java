@@ -10,6 +10,7 @@ public class DigitalCircuitUI {
 	
 	static Circuit circuit;
 	static ArrayList<Input> inputList;
+	static char inputTag = 'A';
 	
 	static void updateUI() {
 		// Call this when you need to redraw
@@ -23,16 +24,16 @@ public class DigitalCircuitUI {
 		// to represent wires connecting circuit components.
 		
 		// Maybe check out the "Placeable" object as well
-		JFrame frame = new JFrame("Circuit Visualizer");
+		JFrame frame = new JFrame("Digital Circuit Visualizer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel emptyLabel = new JLabel("");
 		frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
+		
+		updateUI();
 
 		frame.pack();
 		frame.setVisible(true);
 		// Maybe check out the "Placeable" object as well.
-		
-		updateUI();
 	}
 
 	public static void main(String[] args) {
