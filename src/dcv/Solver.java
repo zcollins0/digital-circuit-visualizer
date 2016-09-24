@@ -8,16 +8,14 @@ public class Solver {
 	ArrayList<Input> inputs;
 	Circuit circuit;
 	
-	// Constructor for Solver: takes inputs and circuit object
+	// Constructor for Solver: takes the owning circuit object
 	Solver(Circuit circuit) {
 		this.circuit = circuit;
 		inputs = circuit.inputs;
 	}
 	
 	void solveAll() {
-		// TODO:
-		// Do all possible scenarios
-		// This part should use multithreading
+		// TODO: Multithread
 		int inputSize = inputs.size();
 		boolean[] states = new boolean[inputSize];
 		double numStates = Math.pow(2, (states.length));
