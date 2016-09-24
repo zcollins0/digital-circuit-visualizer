@@ -1,6 +1,10 @@
 package dcv;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class DigitalCircuitUI {
 	
@@ -18,7 +22,6 @@ public class DigitalCircuitUI {
 		// A Graphics2D might be the best way to implement this. We'll have to draw lines
 		// to represent wires connecting circuit components.
 		
-<<<<<<< HEAD
 		// Maybe check out the "Placeable" object as well
 		JFrame frame = new JFrame("Circuit Visualizer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,12 +30,9 @@ public class DigitalCircuitUI {
 
 		frame.pack();
 		frame.setVisible(true);
-=======
 		// Maybe check out the "Placeable" object as well.
 		
 		updateUI();
-		
->>>>>>> 4affa32986c920aae933e0a9af7c773e1eb9242c
 	}
 
 	public static void main(String[] args) {

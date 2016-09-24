@@ -18,6 +18,8 @@ public class Solver {
 		// TODO:
 		// Do all possible scenarios
 		// This part should use multithreading
+		boolean[] states = new boolean[inputs.size()];
+		double numStates = Math.pow(2, (states.length));
 	}
 	
 	// Solve one specific instance of the circuit
