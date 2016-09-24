@@ -18,8 +18,19 @@ public class Solver {
 		// TODO:
 		// Do all possible scenarios
 		// This part should use multithreading
-		boolean[] states = new boolean[inputs.size()];
+		int inputSize = inputs.size();
+		boolean[] states = new boolean[inputSize];
 		double numStates = Math.pow(2, (states.length));
+		for (int i = 0; i < numStates; i++) {
+			String binaryString = Integer.toBinaryString(i);
+			while (binaryString.length() != inputSize) {
+				binaryString = "0" + binaryString;
+			}
+			for (int j = 0; j < binaryString.length(); j++) {
+				states[j] = (binaryString.substring(j, j + 1) == "1");
+			}
+			solveInstance(states);
+		}
 	}
 	
 	// Solve one specific instance of the circuit
