@@ -25,6 +25,11 @@ public class UnitTests {
 	
 	static void ANDTest() {
 		AND gate = new AND(top, bottom);
+		boolean[] results = runTest(gate);
+		boolean[] expected = {false, false, false, true};
+		if (results != expected) {
+			// Failed
+		}
 	}
 	
 	static void ORTest() {
@@ -39,6 +44,10 @@ public class UnitTests {
 		NOR gate = new NOR(top, bottom);
 	}
 	
+	static void XORTest() {
+		XOR gate = new XOR(top, bottom);
+	}
+	
 	static void NOTTest() {
 		NOT gate = new NOT(top, null);
 		top.setActive(true);
@@ -51,7 +60,25 @@ public class UnitTests {
 		}
 	}
 	
-	static void XORTest() {
-		XOR gate = new XOR(top, bottom);
+	static boolean[] runTest(Gate g) {
+		boolean[] results = new boolean[4];
+		
+		top.setActive(false);
+		bottom.setActive(false);
+		results[0] = g.isActive();
+		
+		top.setActive(false);
+		bottom.setActive(true);
+		results[1] = g.isActive();
+		
+		top.setActive(true);
+		bottom.setActive(false);
+		results[2] = g.isActive();
+		
+		top.setActive(true);
+		bottom.setActive(true);
+		results[3] = g.isActive();
+		
+		return results;
 	}
 }
