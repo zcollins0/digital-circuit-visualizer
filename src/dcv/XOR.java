@@ -8,7 +8,7 @@ public class XOR extends Gate {
 	}
 
 	@Override
-	boolean isActive() {
+	public boolean isActive() {
 		return (topChild.isActive() != bottomChild.isActive());
 	}
 

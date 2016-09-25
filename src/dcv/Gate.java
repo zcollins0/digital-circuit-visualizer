@@ -14,12 +14,12 @@ public abstract class Gate {
 	Gate topChild;
 	Gate bottomChild;
 	
-	Gate(Gate top, Gate bottom) {
+	public Gate(Gate top, Gate bottom) {
 		topChild = top;
 		bottomChild = bottom;
 	}
 	
-	void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
+	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (pos == childPosition.POS_TOP) {
 			topChild = g;
 		}
@@ -28,7 +28,7 @@ public abstract class Gate {
 		}
 	}
 	
-	void addInput() throws InvalidNodeException {
+	public void addInput() throws InvalidNodeException {
 		if (topChild != null) {
 			Input tempInput = new Input(null, null, DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
@@ -46,5 +46,5 @@ public abstract class Gate {
 		}
 	}
 	
-	abstract boolean isActive();
+	public abstract boolean isActive();
 }

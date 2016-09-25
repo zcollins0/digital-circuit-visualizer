@@ -7,7 +7,7 @@ public class Input extends Gate {
 	// The name of the input (A, B, C...)
 	char tag;
 	
-	Input(Gate top, Gate bottom, char tag) {
+	public Input(Gate top, Gate bottom, char tag) {
 		super(top, bottom);
 		top = null;
 		bottom = null;
@@ -17,16 +17,16 @@ public class Input extends Gate {
 	private boolean signal;
 	
 	@Override
-	boolean isActive() {
+	public boolean isActive() {
 		return signal;
 	}
 	
 	@Override
-	void addChildGate(Gate g, childPosition pos)  throws InvalidNodeException {
+	public void addChildGate(Gate g, childPosition pos)  throws InvalidNodeException {
 		throw new InvalidNodeException("Cannot give child to input.");
 	}
 	
-	void setActive(boolean active) {
+	public void setActive(boolean active) {
 		signal = active;
 	}
 

@@ -3,12 +3,12 @@ package dcv;
 // Two input OR gate - active as long as either or both of its inputs is high
 public class OR extends Gate {
 
-	OR(Gate top, Gate bottom) {
+	public OR(Gate top, Gate bottom) {
 		super(top, bottom);
 	}
 
 	@Override
-	boolean isActive() {
+	public boolean isActive() {
 		return (topChild.isActive() || bottomChild.isActive());
 	}
 

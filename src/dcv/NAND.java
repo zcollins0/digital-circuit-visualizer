@@ -3,12 +3,12 @@ package dcv;
 // Two input NAND gate - active when no or one input is active
 public class NAND extends AND {
 	
-	NAND(Gate top, Gate bottom) {
+	public NAND(Gate top, Gate bottom) {
 		super(top, bottom);
 	}
 
 	@Override
-	boolean isActive() {
+	public boolean isActive() {
 		return !(super.isActive());
 	}
 }

@@ -1,10 +1,12 @@
 package dcvUnitTests;
 
-import org.junit.Test;
+import dcv.*;
 
 public class UnitTests {
 	
 	static dcv.Circuit circuit;
+	static Input top = new Input(null, null, 'A');
+	static Input bottom = new Input(null, null, 'B');
 
 	public static void main(String[] args) {
 		// TODO: Write all unit tests
@@ -22,7 +24,7 @@ public class UnitTests {
 	}
 	
 	static void ANDTest() {
-
+		AND gate = new AND(null, null);
 	}
 	
 	static void ORTest() {
