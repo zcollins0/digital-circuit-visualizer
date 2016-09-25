@@ -20,9 +20,7 @@ public class Circuit {
 		solver = new Solver(this);
 	}
 	
-	void giveTop() {
-		// Give options to add each gate here.
-		// There's got to be some nice way to implement polymorphism.
-		// We know what type of gate will be added based on the UI element selected.
+	public void setTop(Gate g) {
+		top = g;
 	}
 }
