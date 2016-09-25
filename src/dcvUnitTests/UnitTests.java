@@ -1,5 +1,7 @@
 package dcvUnitTests;
 
+import org.junit.Test;
+
 public class UnitTests {
 	
 	static dcv.Circuit circuit;
@@ -11,30 +13,35 @@ public class UnitTests {
 		// One unit test for solveAll()
 		// One for making sure exceptions work correctly
 		circuit = new dcv.Circuit();
+		ANDTest();
+		ORTest();
+		NANDTest();
+		NORTest();
+		NOTTest();
+		XORTest();
+	}
+	
+	static void ANDTest() {
+
+	}
+	
+	static void ORTest() {
 		
 	}
 	
-	void ANDTest() {
+	static void NANDTest() {
 		
 	}
 	
-	void ORTest() {
+	static void NORTest() {
 		
 	}
 	
-	void NANDTest() {
+	static void NOTTest() {
 		
 	}
 	
-	void NORTest() {
-		
-	}
-	
-	void NOTTest() {
-		
-	}
-	
-	void XORTest() {
+	static void XORTest() {
 		
 	}
 }
