@@ -4,7 +4,7 @@ package dcv;
 public class NOT extends Gate {
 
 	public NOT(Gate top, Gate bottom) {
-		super(top, bottom);
+		super(top, null);
 	}
 
 	@Override

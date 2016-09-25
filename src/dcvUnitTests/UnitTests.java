@@ -24,26 +24,34 @@ public class UnitTests {
 	}
 	
 	static void ANDTest() {
-		AND gate = new AND(null, null);
+		AND gate = new AND(top, bottom);
 	}
 	
 	static void ORTest() {
-		
+		OR gate = new OR(top, bottom);
 	}
 	
 	static void NANDTest() {
-		
+		NAND gate = new NAND(top, bottom);
 	}
 	
 	static void NORTest() {
-		
+		NOR gate = new NOR(top, bottom);
 	}
 	
 	static void NOTTest() {
-		
+		NOT gate = new NOT(top, null);
+		top.setActive(true);
+		if (gate.isActive()) {
+			// Failed
+		}
+		top.setActive(false);
+		if (!gate.isActive()) {
+			// Failed
+		}
 	}
 	
 	static void XORTest() {
-		
+		XOR gate = new XOR(top, bottom);
 	}
 }
