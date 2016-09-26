@@ -33,6 +33,7 @@ public class UnitTests {
 		GateThirdChildTest();
 	}
 	
+	// Test for AND Gate
 	static void ANDTest() {
 		AND gate = new AND(top, bottom);
 		boolean[] results = runTest(gate);
@@ -42,6 +43,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test for OR Gate
 	static void ORTest() {
 		OR gate = new OR(top, bottom);
 		boolean[] results = runTest(gate);
@@ -51,6 +53,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test for NAND Gate
 	static void NANDTest() {
 		NAND gate = new NAND(top, bottom);
 		boolean[] results = runTest(gate);
@@ -60,6 +63,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test for NOR Gate
 	static void NORTest() {
 		NOR gate = new NOR(top, bottom);
 		boolean[] results = runTest(gate);
@@ -69,6 +73,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test for XOR Gate
 	static void XORTest() {
 		XOR gate = new XOR(top, bottom);
 		boolean[] results = runTest(gate);
@@ -78,6 +83,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test for NOT Gate (inverter)
 	static void NOTTest() {
 		NOT gate = new NOT(top, null);
 		top.setActive(true);
@@ -90,6 +96,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Runs a test on a 2-input gate
 	static boolean[] runTest(Gate g) {
 		boolean[] results = new boolean[4];
 		
@@ -112,18 +119,32 @@ public class UnitTests {
 		return results;
 	}
 	
+	// Test for larger nested gate network
 	static void NestedGateTest() {
 		
 	}
 	
+	// Test for adding a child gate to an input
 	static void InputChildTest() {
+		boolean failed = true;
+		try {
+			top.addChildGate(new AND(null, null), Gate.childPosition.POS_TOP);
+		}
+		catch (dcv.InvalidNodeException e){
+			failed = false;
+		}
 		
+		if (failed) {
+			Thread.dumpStack();
+		}
 	}
 	
+	// Test for adding a second child to an inverter
 	static void NOTSecondChildTest() {
 		
 	}
 	
+	// Test for adding a third child to a gate
 	static void GateThirdChildTest() {
 		
 	}
