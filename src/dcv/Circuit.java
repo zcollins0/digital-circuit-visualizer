@@ -11,12 +11,12 @@ public class Circuit {
 	ArrayList<Input> inputs;
 	
 	// Return whether top gate is active
-	boolean isActive() {
+	public boolean isActive() {
 		return top.isActive();
 	}
 	
 	// Add a solver to the circuit. Should be invoked when a solution is requested.
-	void giveSolver() {
+	public void giveSolver() {
 		solver = new Solver(this);
 	}
 	

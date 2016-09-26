@@ -10,7 +10,6 @@ public class UnitTests {
 	static Input bottom = new Input(null, null, 'B');
 
 	public static void main(String[] args) {	
-		// TODO: One unit test for solveAll()
 
 		circuit = new dcv.Circuit();
 		
@@ -29,6 +28,9 @@ public class UnitTests {
 		InputChildTest();
 		NOTSecondChildTest();
 		GateThirdChildTest();
+		
+		// Test for the solveAll method
+		SolveAllTest();
 	}
 	
 	// Test for AND Gate
@@ -179,5 +181,14 @@ public class UnitTests {
 		if (failed) {
 			Thread.dumpStack();
 		}
+	}
+	
+	static void SolveAllTest() {
+		Circuit circuit = new Circuit();
+		circuit.setTop(new OR(null, null));
+		
+		// TODO: Build up circuit and call solveAll
+		
+		circuit.giveSolver();
 	}
 }
