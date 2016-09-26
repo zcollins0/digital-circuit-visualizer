@@ -29,10 +29,5 @@ public class PopupListener extends MouseAdapter{
 	public void mouseReleased(MouseEvent e) {
 	}
 	
-	private void ShowPopup(MouseEvent e) {
-		if (e.isPopupTrigger()) {
-			DigitalCircuitUI.popup.show(e.getComponent(),
-					e.getX(), e.getY());
-		}
-	}
+	
 }
