@@ -21,10 +21,20 @@ public abstract class Gate {
 	
 	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (pos == childPosition.POS_TOP) {
-			topChild = g;
+			if (topChild == null) {
+				topChild = g;
+			}
+			else {
+				throw new InvalidNodeException("Top child position is occupied.");
+			}
 		}
 		else {
-			bottomChild = g;
+			if (bottomChild == null) {
+				bottomChild = g;
+			}
+			else {
+				throw new InvalidNodeException("Bottom child position is occupied.");
+			}
 		}
 	}
 	

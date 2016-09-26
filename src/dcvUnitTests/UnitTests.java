@@ -127,10 +127,11 @@ public class UnitTests {
 	// Test for adding a child gate to an input
 	static void InputChildTest() {
 		boolean failed = true;
+		
 		try {
 			top.addChildGate(new AND(null, null), Gate.childPosition.POS_TOP);
 		}
-		catch (dcv.InvalidNodeException e){
+		catch (InvalidNodeException e){
 			failed = false;
 		}
 		
@@ -141,11 +142,35 @@ public class UnitTests {
 	
 	// Test for adding a second child to an inverter
 	static void NOTSecondChildTest() {
+		NOT gate = new NOT(top, null);
+		boolean failed = true;
 		
+		try {
+			gate.addChildGate(bottom, Gate.childPosition.POS_BOTTOM);
+		}
+		catch (InvalidNodeException e){
+			failed = false;
+		}
+		
+		if (failed) {
+			Thread.dumpStack();
+		}
 	}
 	
 	// Test for adding a third child to a gate
 	static void GateThirdChildTest() {
+		AND gate = new AND(top, bottom);
+		boolean failed = true;
 		
+		try {
+			gate.addChildGate(new OR(null, null), Gate.childPosition.POS_BOTTOM);
+		}
+		catch (InvalidNodeException e){
+			failed = false;
+		}
+		
+		if (failed) {
+			Thread.dumpStack();
+		}
 	}
 }
