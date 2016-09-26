@@ -16,6 +16,7 @@ public class Solver {
 
 	// Solve all permutations of inputs
 	public boolean[] solveAll() {
+		// TODO: Multithread this
 		int inputSize = inputs.size();
 		boolean[] results = new boolean[inputSize];
 		boolean[] states = new boolean[inputSize];
@@ -35,10 +36,8 @@ public class Solver {
 	}
 
 	// Solve one specific instance of the circuit
-	// If the array of booleans is longer than the array of inputs, the
-	// remaining booleans are ignored
-	// If the array of booleans is shorter, the remaining inputs are set to
-	// false
+	// If the array of booleans is longer than the array of inputs, the remaining booleans are ignored
+	// If the array of booleans is shorter, the remaining inputs are set to false
 	boolean solveInstance(boolean[] states) {
 		int i;
 		for (i = 0; i < states.length; i++) {
