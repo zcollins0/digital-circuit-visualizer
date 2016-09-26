@@ -7,17 +7,16 @@ import java.util.ArrayList;
 public class Solver {
 	ArrayList<Input> inputs;
 	Circuit circuit;
-	
+
 	// Constructor for Solver: takes the owning circuit object
 	Solver(Circuit circuit) {
 		this.circuit = circuit;
 		inputs = circuit.inputs;
 	}
-	
-	void solveAll() {
-		// TODO: Multithread
-		// TODO: Figure out how to communicate values returned
+
+	public boolean[] solveAll() {
 		int inputSize = inputs.size();
+		boolean[] results = new boolean[inputSize];
 		boolean[] states = new boolean[inputSize];
 		double numStates = Math.pow(2, (states.length));
 		for (int i = 0; i < numStates; i++) {
@@ -28,17 +27,22 @@ public class Solver {
 			for (int j = 0; j < binaryString.length(); j++) {
 				states[j] = (binaryString.substring(j, j + 1) == "1");
 			}
-			solveInstance(states);
+			results[i] = solveInstance(states);
 		}
+		
+		return results;
 	}
-	
+
 	// Solve one specific instance of the circuit
-	// If the array of booleans is longer than the array of inputs, the remaining booleans are ignored
-	// If the array of booleans is shorter, the remaining inputs are set to false
+	// If the array of booleans is longer than the array of inputs, the
+	// remaining booleans are ignored
+	// If the array of booleans is shorter, the remaining inputs are set to
+	// false
 	boolean solveInstance(boolean[] states) {
 		int i;
 		for (i = 0; i < states.length; i++) {
-			if (i == inputs.size()) break;
+			if (i == inputs.size())
+				break;
 			inputs.get(i).setActive(states[i]);
 		}
 		if (i < inputs.size()) {
@@ -46,7 +50,7 @@ public class Solver {
 				inputs.get(i).setActive(false);
 			}
 		}
-		
+
 		return circuit.top.isActive();
 	}
 }
