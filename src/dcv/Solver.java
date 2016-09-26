@@ -14,6 +14,7 @@ public class Solver {
 		inputs = circuit.inputs;
 	}
 
+	// Solve all permutations of inputs
 	public boolean[] solveAll() {
 		int inputSize = inputs.size();
 		boolean[] results = new boolean[inputSize];
