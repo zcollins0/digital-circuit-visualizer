@@ -34,18 +34,38 @@ public class UnitTests {
 	
 	static void ORTest() {
 		OR gate = new OR(top, bottom);
+		boolean[] results = runTest(gate);
+		boolean[] expected = {false, true, true, true};
+		if (results != expected) {
+			// Failed
+		}
 	}
 	
 	static void NANDTest() {
 		NAND gate = new NAND(top, bottom);
+		boolean[] results = runTest(gate);
+		boolean[] expected = {true, true, true, false};
+		if (results != expected) {
+			// Failed
+		}
 	}
 	
 	static void NORTest() {
 		NOR gate = new NOR(top, bottom);
+		boolean[] results = runTest(gate);
+		boolean[] expected = {true, false, false, false};
+		if (results != expected) {
+			// Failed
+		}
 	}
 	
 	static void XORTest() {
 		XOR gate = new XOR(top, bottom);
+		boolean[] results = runTest(gate);
+		boolean[] expected = {false, true, true, false};
+		if (results != expected) {
+			// Failed
+		}
 	}
 	
 	static void NOTTest() {
