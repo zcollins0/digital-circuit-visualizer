@@ -9,11 +9,9 @@ public class UnitTests {
 	static Input top = new Input(null, null, 'A');
 	static Input bottom = new Input(null, null, 'B');
 
-	public static void main(String[] args) {
-		// TODO: Write all unit tests
-		
-		// One unit test for solveAll()
-		// One for making sure exceptions are thrown when necessary
+	public static void main(String[] args) {	
+		// TODO: One unit test for solveAll()
+
 		circuit = new dcv.Circuit();
 		
 		// Tests for each type of gate
