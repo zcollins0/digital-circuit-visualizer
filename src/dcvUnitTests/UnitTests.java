@@ -1,6 +1,7 @@
 package dcvUnitTests;
 
 import dcv.*;
+import java.util.Arrays;
 
 public class UnitTests {
 	
@@ -11,7 +12,6 @@ public class UnitTests {
 	public static void main(String[] args) {
 		// TODO: Write all unit tests
 		
-		// Should have one unit test for each type of gate.
 		// One unit test for solveAll()
 		// One for making sure exceptions work correctly
 		circuit = new dcv.Circuit();
@@ -19,16 +19,16 @@ public class UnitTests {
 		ORTest();
 		NANDTest();
 		NORTest();
-		NOTTest();
 		XORTest();
+		NOTTest();
 	}
 	
 	static void ANDTest() {
 		AND gate = new AND(top, bottom);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, false, false, true};
-		if (results != expected) {
-			// Failed
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 	
@@ -36,8 +36,8 @@ public class UnitTests {
 		OR gate = new OR(top, bottom);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, true, true, true};
-		if (results != expected) {
-			// Failed
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 	
@@ -45,8 +45,8 @@ public class UnitTests {
 		NAND gate = new NAND(top, bottom);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {true, true, true, false};
-		if (results != expected) {
-			// Failed
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 	
@@ -54,8 +54,8 @@ public class UnitTests {
 		NOR gate = new NOR(top, bottom);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {true, false, false, false};
-		if (results != expected) {
-			// Failed
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 	
@@ -63,8 +63,8 @@ public class UnitTests {
 		XOR gate = new XOR(top, bottom);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, true, true, false};
-		if (results != expected) {
-			// Failed
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 	
@@ -72,11 +72,11 @@ public class UnitTests {
 		NOT gate = new NOT(top, null);
 		top.setActive(true);
 		if (gate.isActive()) {
-			// Failed
+			Thread.dumpStack();
 		}
 		top.setActive(false);
 		if (!gate.isActive()) {
-			// Failed
+			Thread.dumpStack();
 		}
 	}
 	
