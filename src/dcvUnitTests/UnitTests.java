@@ -13,14 +13,24 @@ public class UnitTests {
 		// TODO: Write all unit tests
 		
 		// One unit test for solveAll()
-		// One for making sure exceptions work correctly
+		// One for making sure exceptions are thrown when necessary
 		circuit = new dcv.Circuit();
+		
+		// Tests for each type of gate
 		ANDTest();
 		ORTest();
 		NANDTest();
 		NORTest();
 		XORTest();
 		NOTTest();
+		
+		// Test for nested gates
+		NestedGateTest();
+		
+		// Tests for exceptions
+		InputChildTest();
+		NOTSecondChildTest();
+		GateThirdChildTest();
 	}
 	
 	static void ANDTest() {
@@ -100,5 +110,21 @@ public class UnitTests {
 		results[3] = g.isActive();
 		
 		return results;
+	}
+	
+	static void NestedGateTest() {
+		
+	}
+	
+	static void InputChildTest() {
+		
+	}
+	
+	static void NOTSecondChildTest() {
+		
+	}
+	
+	static void GateThirdChildTest() {
+		
 	}
 }
