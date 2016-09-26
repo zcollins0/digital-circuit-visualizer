@@ -5,7 +5,7 @@ package dcv;
 // Only supports 2-input gates right now. Possible future enhancement is to add 3-input gates.
 public abstract class Gate {
 	
-	enum childPosition {
+	public enum childPosition {
 		// TODO: Consider implementation for 3 input gate
 		POS_TOP,
 		POS_BOTTOM
@@ -21,10 +21,20 @@ public abstract class Gate {
 	
 	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (pos == childPosition.POS_TOP) {
-			topChild = g;
+			if (topChild == null) {
+				topChild = g;
+			}
+			else {
+				throw new InvalidNodeException("Top child position is occupied.");
+			}
 		}
 		else {
-			bottomChild = g;
+			if (bottomChild == null) {
+				bottomChild = g;
+			}
+			else {
+				throw new InvalidNodeException("Bottom child position is occupied.");
+			}
 		}
 	}
 	
