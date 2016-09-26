@@ -121,7 +121,16 @@ public class UnitTests {
 	
 	// Test for larger nested gate network
 	static void NestedGateTest() {
+		AND childGateTop = new AND(top, bottom);
+		NOR childGateBottom = new NOR(top, bottom);
 		
+		OR topGate = new OR(childGateTop, childGateBottom);
+		
+		boolean[] results = runTest(topGate);
+		boolean[] expected = {true, false, false, true};
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
+		}
 	}
 	
 	// Test for adding a child gate to an input
