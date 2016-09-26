@@ -20,6 +20,7 @@ public class Circuit {
 		solver = new Solver(this);
 	}
 	
+	// Set the top level gate. This should be invoked when the first gate is created.
 	public void setTop(Gate g) {
 		top = g;
 	}

@@ -16,6 +16,7 @@ public class Solver {
 	
 	void solveAll() {
 		// TODO: Multithread
+		// TODO: Figure out how to communicate values returned
 		int inputSize = inputs.size();
 		boolean[] states = new boolean[inputSize];
 		double numStates = Math.pow(2, (states.length));
