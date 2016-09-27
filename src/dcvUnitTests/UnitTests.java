@@ -1,6 +1,8 @@
 package dcvUnitTests;
 
 import dcv.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UnitTests {
@@ -185,16 +187,23 @@ public class UnitTests {
 	
 	static void SolveAllTest() {
 		Circuit circuit = new Circuit();
-		circuit.setTop(new OR(null, null));
 		AND andgate = new AND(top, bottom);
 		Input C = new Input(null, null, 'C');
 		Input D = new Input(null, null, 'D');
-		
 		XOR xorgate = new XOR(C, D);
-		
+		circuit.setTop(new OR(andgate, xorgate));
+		circuit.inputs = new ArrayList<Input>();
+		circuit.inputs.add(top);
+		circuit.inputs.add(bottom);
+		circuit.inputs.add(C);
+		circuit.inputs.add(D);
 		// TODO: Build up circuit and call solveAll
 		
 		circuit.giveSolver();
 		boolean[] results = circuit.solver.solveAll();
+		
+		for (boolean b : results) {
+			if (b) System.out.println("True");
+		}
 	}
 }

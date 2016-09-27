@@ -18,7 +18,7 @@ public class Solver {
 	public boolean[] solveAll() {
 		// TODO: Multithread this
 		int inputSize = inputs.size();
-		boolean[] results = new boolean[inputSize];
+		boolean[] results = new boolean[inputSize*inputSize];
 		boolean[] states = new boolean[inputSize];
 		double numStates = Math.pow(2, (states.length));
 		for (int i = 0; i < numStates; i++) {
@@ -26,8 +26,9 @@ public class Solver {
 			while (binaryString.length() != inputSize) {
 				binaryString = "0" + binaryString;
 			}
-			for (int j = 0; j < binaryString.length(); j++) {
-				states[j] = (binaryString.substring(j, j + 1) == "1");
+			char[] binaryChars = binaryString.toCharArray();
+			for (int j = 0; j < binaryChars.length; j++) {
+				states[j] = (binaryChars[j] == '1');
 			}
 			results[i] = solveInstance(states);
 		}
