@@ -87,7 +87,7 @@ public class UnitTests {
 	
 	// Test for NOT Gate (inverter)
 	static void NOTTest() {
-		NOT gate = new NOT(top, null);
+		NOT gate = new NOT(top);
 		top.setActive(true);
 		if (gate.isActive()) {
 			Thread.dumpStack();
@@ -153,7 +153,7 @@ public class UnitTests {
 	
 	// Test for adding a second child to an inverter
 	static void NOTSecondChildTest() {
-		NOT gate = new NOT(top, null);
+		NOT gate = new NOT(top);
 		boolean failed = true;
 		
 		try {

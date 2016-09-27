@@ -3,7 +3,7 @@ package dcv;
 // 1-input inverter. Should only have one child.
 public class NOT extends Gate {
 
-	public NOT(Gate top, Gate bottom) {
+	public NOT(Gate top) {
 		super(top, null);
 	}
 
@@ -14,17 +14,12 @@ public class NOT extends Gate {
 	
 	@Override
 	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
-		if (topChild != null || bottomChild != null) {
+		if (topChild != null) {
 			throw new InvalidNodeException("Inverter already has a child.");
 		}
 		else {
-			if (pos == Gate.childPosition.POS_TOP) {
-				topChild = g;
-			}
-			else {
-				bottomChild = g;
-			}
+			// Note: never allow NOt gate to have bottom child
+			topChild = g;
 		}
 	}
-
 }
