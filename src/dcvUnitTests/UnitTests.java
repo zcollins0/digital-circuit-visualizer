@@ -185,6 +185,7 @@ public class UnitTests {
 		}
 	}
 	
+	// Test solving all instances of circuit
 	static void SolveAllTest() {
 		Circuit circuit = new Circuit();
 		AND andgate = new AND(top, bottom);
@@ -197,7 +198,6 @@ public class UnitTests {
 		circuit.inputs.add(bottom);
 		circuit.inputs.add(C);
 		circuit.inputs.add(D);
-		// TODO: Build up circuit and call solveAll
 		
 		circuit.giveSolver();
 		boolean[] results = circuit.solver.solveAll();
