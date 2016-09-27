@@ -7,8 +7,8 @@ public class Circuit {
 	
 	// TODO: Allow multiple top level gates
 	Gate top;
-	Solver solver;
-	ArrayList<Input> inputs;
+	public Solver solver;
+	public ArrayList<Input> inputs;
 	
 	// Return whether top gate is active
 	public boolean isActive() {

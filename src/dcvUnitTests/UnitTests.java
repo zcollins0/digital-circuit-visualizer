@@ -186,9 +186,15 @@ public class UnitTests {
 	static void SolveAllTest() {
 		Circuit circuit = new Circuit();
 		circuit.setTop(new OR(null, null));
+		AND andgate = new AND(top, bottom);
+		Input C = new Input(null, null, 'C');
+		Input D = new Input(null, null, 'D');
+		
+		XOR xorgate = new XOR(C, D);
 		
 		// TODO: Build up circuit and call solveAll
 		
 		circuit.giveSolver();
+		boolean[] results = circuit.solver.solveAll();
 	}
 }
