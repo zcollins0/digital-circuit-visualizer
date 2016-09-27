@@ -202,8 +202,15 @@ public class UnitTests {
 		circuit.giveSolver();
 		boolean[] results = circuit.solver.solveAll();
 		
+		// Expected: true when C or D but not both are high
+		// Also true when both A and B are high, which is the 4th row
+		boolean[] expected = {false, true, true, false,
+							false, true, true, false,
+							false, true, true, false,
+							true, true, true, true};
 		for (boolean b : results) {
 			if (b) System.out.println("True");
+			else System.out.println("False");
 		}
 	}
 }
