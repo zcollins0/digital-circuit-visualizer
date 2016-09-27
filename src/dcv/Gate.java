@@ -44,13 +44,13 @@ public abstract class Gate {
 	// Method to add input to selected gate
 	public void addInput() throws InvalidNodeException {
 		if (topChild != null) {
-			Input tempInput = new Input(null, null, DigitalCircuitUI.inputTag);
+			Input tempInput = new Input(DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
 			topChild = tempInput;
 			DigitalCircuitUI.inputList.add(tempInput);
 		}
 		else if (bottomChild != null) {
-			Input tempInput = new Input(null, null, DigitalCircuitUI.inputTag);
+			Input tempInput = new Input(DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
 			bottomChild = tempInput;
 			DigitalCircuitUI.inputList.add(tempInput);

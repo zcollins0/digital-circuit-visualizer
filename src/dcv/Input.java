@@ -7,13 +7,11 @@ public class Input extends Gate {
 	// The name of the input (A, B, C...)
 	char tag;
 	
-	public Input(Gate top, Gate bottom, char tag) {
-		super(top, bottom);
-		top = null;
-		bottom = null;
+	public Input(char tag) {
+		super(null, null);
 		this.tag = tag;
 	}
-
+	
 	private boolean signal;
 	
 	@Override

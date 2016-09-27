@@ -8,8 +8,8 @@ import java.util.Arrays;
 public class UnitTests {
 	
 	static dcv.Circuit circuit;
-	static Input top = new Input(null, null, 'A');
-	static Input bottom = new Input(null, null, 'B');
+	static Input top = new Input('A');
+	static Input bottom = new Input('B');
 
 	public static void main(String[] args) {	
 
@@ -189,8 +189,8 @@ public class UnitTests {
 	static void SolveAllTest() {
 		Circuit circuit = new Circuit();
 		AND andgate = new AND(top, bottom);
-		Input C = new Input(null, null, 'C');
-		Input D = new Input(null, null, 'D');
+		Input C = new Input('C');
+		Input D = new Input('D');
 		XOR xorgate = new XOR(C, D);
 		circuit.setTop(new OR(andgate, xorgate));
 		circuit.inputs = new ArrayList<Input>();
