@@ -208,9 +208,8 @@ public class UnitTests {
 							false, true, true, false,
 							false, true, true, false,
 							true, true, true, true};
-		for (boolean b : results) {
-			if (b) System.out.println("True");
-			else System.out.println("False");
+		if (!Arrays.equals(results, expected)) {
+			Thread.dumpStack();
 		}
 	}
 }
