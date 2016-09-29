@@ -8,8 +8,8 @@ import java.util.Arrays;
 public class UnitTests {
 	
 	static dcv.Circuit circuit;
-	static Input top = new Input('A');
-	static Input bottom = new Input('B');
+	static Input A = new Input('A');
+	static Input B = new Input('B');
 
 	public static void main(String[] args) {	
 
@@ -37,7 +37,7 @@ public class UnitTests {
 	
 	// Test for AND Gate
 	static void ANDTest() {
-		AND gate = new AND(top, bottom);
+		AND gate = new AND(A, B);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, false, false, true};
 		if (!Arrays.equals(results, expected)) {
@@ -47,7 +47,7 @@ public class UnitTests {
 	
 	// Test for OR Gate
 	static void ORTest() {
-		OR gate = new OR(top, bottom);
+		OR gate = new OR(A, B);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, true, true, true};
 		if (!Arrays.equals(results, expected)) {
@@ -57,7 +57,7 @@ public class UnitTests {
 	
 	// Test for NAND Gate
 	static void NANDTest() {
-		NAND gate = new NAND(top, bottom);
+		NAND gate = new NAND(A, B);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {true, true, true, false};
 		if (!Arrays.equals(results, expected)) {
@@ -67,7 +67,7 @@ public class UnitTests {
 	
 	// Test for NOR Gate
 	static void NORTest() {
-		NOR gate = new NOR(top, bottom);
+		NOR gate = new NOR(A, B);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {true, false, false, false};
 		if (!Arrays.equals(results, expected)) {
@@ -77,7 +77,7 @@ public class UnitTests {
 	
 	// Test for XOR Gate
 	static void XORTest() {
-		XOR gate = new XOR(top, bottom);
+		XOR gate = new XOR(A, B);
 		boolean[] results = runTest(gate);
 		boolean[] expected = {false, true, true, false};
 		if (!Arrays.equals(results, expected)) {
@@ -87,12 +87,12 @@ public class UnitTests {
 	
 	// Test for NOT Gate (inverter)
 	static void NOTTest() {
-		NOT gate = new NOT(top);
-		top.setActive(true);
+		NOT gate = new NOT(A);
+		A.setActive(true);
 		if (gate.isActive()) {
 			Thread.dumpStack();
 		}
-		top.setActive(false);
+		A.setActive(false);
 		if (!gate.isActive()) {
 			Thread.dumpStack();
 		}
@@ -102,20 +102,20 @@ public class UnitTests {
 	static boolean[] runTest(Gate g) {
 		boolean[] results = new boolean[4];
 		
-		top.setActive(false);
-		bottom.setActive(false);
+		A.setActive(false);
+		B.setActive(false);
 		results[0] = g.isActive();
 		
-		top.setActive(false);
-		bottom.setActive(true);
+		A.setActive(false);
+		B.setActive(true);
 		results[1] = g.isActive();
 		
-		top.setActive(true);
-		bottom.setActive(false);
+		A.setActive(true);
+		B.setActive(false);
 		results[2] = g.isActive();
 		
-		top.setActive(true);
-		bottom.setActive(true);
+		A.setActive(true);
+		B.setActive(true);
 		results[3] = g.isActive();
 		
 		return results;
@@ -123,8 +123,8 @@ public class UnitTests {
 	
 	// Test for larger nested gate network
 	static void NestedGateTest() {
-		AND childGateTop = new AND(top, bottom);
-		NOR childGateBottom = new NOR(top, bottom);
+		AND childGateTop = new AND(A, B);
+		NOR childGateBottom = new NOR(A, B);
 		
 		OR topGate = new OR(childGateTop, childGateBottom);
 		
@@ -140,7 +140,7 @@ public class UnitTests {
 		boolean failed = true;
 		
 		try {
-			top.addChildGate(new AND(null, null), Gate.childPosition.POS_TOP);
+			A.addChildGate(new AND(null, null), Gate.childPosition.POS_TOP);
 		}
 		catch (InvalidNodeException e){
 			failed = false;
@@ -153,11 +153,11 @@ public class UnitTests {
 	
 	// Test for adding a second child to an inverter
 	static void NOTSecondChildTest() {
-		NOT gate = new NOT(top);
+		NOT gate = new NOT(A);
 		boolean failed = true;
 		
 		try {
-			gate.addChildGate(bottom, Gate.childPosition.POS_BOTTOM);
+			gate.addChildGate(B, Gate.childPosition.POS_BOTTOM);
 		}
 		catch (InvalidNodeException e){
 			failed = false;
@@ -170,7 +170,7 @@ public class UnitTests {
 	
 	// Test for adding a third child to a gate
 	static void GateThirdChildTest() {
-		AND gate = new AND(top, bottom);
+		AND gate = new AND(A, B);
 		boolean failed = true;
 		
 		try {
@@ -188,14 +188,14 @@ public class UnitTests {
 	// Test solving all instances of circuit
 	static void SolveAllTest() {
 		Circuit circuit = new Circuit();
-		AND andgate = new AND(top, bottom);
+		AND andgate = new AND(A, B);
 		Input C = new Input('C');
 		Input D = new Input('D');
 		XOR xorgate = new XOR(C, D);
 		circuit.setTop(new OR(andgate, xorgate));
 		circuit.inputs = new ArrayList<Input>();
-		circuit.inputs.add(top);
-		circuit.inputs.add(bottom);
+		circuit.inputs.add(A);
+		circuit.inputs.add(B);
 		circuit.inputs.add(C);
 		circuit.inputs.add(D);
 		
