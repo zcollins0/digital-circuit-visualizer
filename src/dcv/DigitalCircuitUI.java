@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.awt.event.ActionEvent;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -30,6 +34,11 @@ class DigitalCircuitUI {
 	static public JPopupMenu popup;
 	static public JFrame frame;
 	static public JPanel panel;
+	static boolean drag = false;
+	static int mouseX = 200;
+	static int mouseY = 100;
+	static int clickX = 0;
+	static int clickY = 0;
 
 	static void updateUI() {
 		// Call this when you need to redraw
@@ -93,6 +102,8 @@ class DigitalCircuitUI {
 		ImageIcon icon = new ImageIcon(temp);
 		
 		JLabel label1 = new JLabel(icon);
+		label1.addMouseMotionListener(new DragImageListener(){});
+	    label1.addMouseListener(new DragImageListener(){});
 		
 		JPanel newPanel = new JPanel();
 		newPanel.setLayout(null);
