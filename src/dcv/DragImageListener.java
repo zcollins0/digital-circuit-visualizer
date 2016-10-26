@@ -10,44 +10,38 @@ import javax.swing.JFrame;
 public class DragImageListener extends JFrame implements MouseMotionListener, MouseListener {
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-			DigitalCircuitUI.drag=true;
-			DigitalCircuitUI.clickX = e.getX();
-			DigitalCircuitUI.clickY = e.getY();
+	    //if mouse button held down, get coordinates and set drag to true
+	    DigitalCircuitUI.drag=true;
+	    DigitalCircuitUI.clickX = e.getX();
+	    DigitalCircuitUI.clickY = e.getY();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		DigitalCircuitUI.drag = false;
+	    //if mouse is released, set stop dragging
+	    DigitalCircuitUI.drag = false;
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(DigitalCircuitUI.drag==true){
-			DigitalCircuitUI.mouseX = e.getX();
-			DigitalCircuitUI.mouseY = e.getY();
-			JComponent jc = (JComponent)e.getSource();
-			jc.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY);
-		}
-		
+	    //if drag is true, set the location of the component being dragged
+	    if(DigitalCircuitUI.drag==true){
+	        DigitalCircuitUI.mouseX = e.getX();
+	        DigitalCircuitUI.mouseY = e.getY();
+	        JComponent jc = (JComponent)e.getSource();
+		//some offsetting was necessary to get the image to move smoothly and appear in the correct location
+	        jc.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY);
+		}	
 	}
 
 	@Override
