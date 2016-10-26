@@ -81,7 +81,8 @@ class DigitalCircuitUI {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		
+	
+		//grabs image of gate from src	
 		File inputFile = new File(imageFile);
 		FileInputStream istream = null;
 		BufferedImage image = null;
@@ -98,9 +99,12 @@ class DigitalCircuitUI {
 			System.out.println("Could not read image");
 			System.exit(0);
 		} 
+
+		//resizes the image
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 		
+		//allows image to be dragged by user
 		JLabel label1 = new JLabel(icon);
 		label1.addMouseMotionListener(new DragImageListener(){});
 	    label1.addMouseListener(new DragImageListener(){});
@@ -118,8 +122,6 @@ class DigitalCircuitUI {
 		
 		panel.add(label1);
 		
-		System.out.println(newPanel.getPreferredSize());
-		
 		frame.add(newPanel);
 		newPanel.revalidate();
 		newPanel.repaint();
@@ -129,9 +131,14 @@ class DigitalCircuitUI {
 	}
 	
 	static void addGateMenu(){
+		//This function creates a right click menu button for the user to select gate type
 		popup = new JPopupMenu();
+
+		//creating popup menu
 		JMenuItem addGate = new JMenuItem("Add AND Gate");
 		addGate.addMouseListener(new PopupListener());
+
+		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		addGate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked AND");
