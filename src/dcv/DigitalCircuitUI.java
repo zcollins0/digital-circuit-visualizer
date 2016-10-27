@@ -1,9 +1,11 @@
 package dcv;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -40,10 +42,15 @@ class DigitalCircuitUI {
 	static int clickX = 0;
 	static int clickY = 0;
 	static boolean first = true; 
-
+	static Circuit circ = new Circuit();
+	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	static void updateUI() {
 		// Call this when you need to redraw
-
+		for (JLabel l: labels){
+			panel.add(l);			
+		}
+		panel.revalidate();
+		panel.repaint();
 
 	}
 
@@ -60,10 +67,18 @@ class DigitalCircuitUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel emptyLabel = new JLabel("");
 		frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-		panel.setLayout(new FlowLayout());
+		
+		panel.setLayout(null);
+		
 		JLabel label = new JLabel("Right Click to Select Gate Type. First gate selected will be top gate");
+		Dimension size = label.getPreferredSize();
+		label.setBounds(10, 5, size.width, size.height);
+		
 		JButton button = new JButton();
 		button.setText("Evaluate");
+		Dimension bsize = button.getPreferredSize();
+		button.setBounds(480, 5, bsize.width, bsize.height);
+		
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
 		frame.add(panel);
@@ -71,25 +86,23 @@ class DigitalCircuitUI {
 		frame.setLocationRelativeTo(null);
 
 		frame.addMouseListener(new PopupListener());
-		updateUI();
 
 		frame.setVisible(true);
 		// Maybe check out the "Placeable" object as well.
 	}
 
 	static void displayGate(String imageFile){
-		
+
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-	
+
 		//grabs image of gate from src	
 		File inputFile = new File(imageFile);
 		FileInputStream istream = null;
 		BufferedImage image = null;
-		
 		try {
-			istream = new FileInputStream(inputFile);
+			istream = new FileInputStream(imageFile);
 		} catch (FileNotFoundException e1) {
 			System.out.println("File not found");
 			System.exit(0);
@@ -104,39 +117,25 @@ class DigitalCircuitUI {
 		//resizes the image
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
-		
+
 		//allows image to be dragged by user
 		JLabel label1 = new JLabel(icon);
+		Dimension lsize = label1.getPreferredSize();
+		
 		label1.addMouseMotionListener(new DragImageListener(){});
-	    label1.addMouseListener(new DragImageListener(){});
+		label1.addMouseListener(new DragImageListener(){});
+		label1.setBounds(100, 100, lsize.width, lsize.height);
 		
-		JPanel newPanel = new JPanel();
-		newPanel.setLayout(null);
-		
-		label1.setLocation(PopupListener.xcord, PopupListener.ycord);
-		
-		newPanel.setSize(50,50);
-		newPanel.setBounds(300, 300, 50, 50);
-		newPanel.setLocation(PopupListener.xcord, PopupListener.ycord);
-		newPanel.add(label1);
-		newPanel.setVisible(true);
-		
-		panel.add(label1);
-		
-		frame.add(newPanel);
-		newPanel.revalidate();
-		newPanel.repaint();
-		panel.revalidate();
-		panel.repaint();
-		
+		labels.add(label1);
+		updateUI();
 	}
-	
+
 	static void addGateMenu(){
 		//This function creates a right click menu button for the user to select gate type
-		Gate newGate;
+		Gate newGate = null;
 
 		if (first)
-			setTop(newGate);
+			circ.setTop(newGate);
 		first = false;
 
 		popup = new JPopupMenu();
