@@ -39,6 +39,7 @@ class DigitalCircuitUI {
 	static int mouseY = 100;
 	static int clickX = 0;
 	static int clickY = 0;
+	static boolean first = true; 
 
 	static void updateUI() {
 		// Call this when you need to redraw
@@ -60,7 +61,7 @@ class DigitalCircuitUI {
 		JLabel emptyLabel = new JLabel("");
 		frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
 		panel.setLayout(new FlowLayout());
-		JLabel label = new JLabel("Right Click to Select Gate Type");
+		JLabel label = new JLabel("Right Click to Select Gate Type. First gate selected will be top gate");
 		JButton button = new JButton();
 		button.setText("Evaluate");
 		panel.add(label);
@@ -132,6 +133,12 @@ class DigitalCircuitUI {
 	
 	static void addGateMenu(){
 		//This function creates a right click menu button for the user to select gate type
+		Gate newGate;
+
+		if (first)
+			setTop(newGate);
+		first = false;
+
 		popup = new JPopupMenu();
 
 		//creating popup menu
