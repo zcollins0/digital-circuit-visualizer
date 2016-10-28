@@ -9,6 +9,11 @@ import javax.swing.JFrame;
 
 public class DragImageListener extends JFrame implements MouseMotionListener, MouseListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		/*if(e.getButton() == MouseEvent.BUTTON3){

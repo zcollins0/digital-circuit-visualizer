@@ -22,23 +22,17 @@ public abstract class Gate {
 	}
 	
 	// Method to add a child to selected gate
-	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
-		if (pos == childPosition.POS_TOP) {
+	public void addChildGate(Gate g) throws InvalidNodeException {
 			if (child1 == null) {
 				child1 = g;
 			}
-			else {
-				throw new InvalidNodeException("Child 1 position is occupied.");
-			}
-		}
-		else {
-			if (child2 == null) {
-				child2 = g;
+			else if(child2 == null) {
+				child2 = g; 
+				System.out.println("Child 1 position is occupied.Putting in child 2 position");
 			}
 			else {
 				throw new InvalidNodeException("Child 2 position is occupied.");
 			}
-		}
 	}
 	
 	// Method to add input to selected gate

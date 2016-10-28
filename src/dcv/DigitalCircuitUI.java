@@ -2,33 +2,26 @@ package dcv;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.MenuElement;
-
-import java.io.*;
 
 class DigitalCircuitUI {
 
@@ -47,6 +40,7 @@ class DigitalCircuitUI {
 	static Circuit circ = new Circuit();
 	static MouseListener frameListener = null;
 	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
+	static Gate parentGate;
 	static void updateUI() {
 		// Call this when you need to redraw
 		for (JLabel l: labels){
@@ -87,7 +81,7 @@ class DigitalCircuitUI {
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
-		
+
 		frameListener = new PopupListener();
 		frame.addMouseListener(frameListener);
 
@@ -102,7 +96,6 @@ class DigitalCircuitUI {
 		constraints.gridy = 0;
 
 		//grabs image of gate from src	
-		File inputFile = new File(imageFile);
 		FileInputStream istream = null;
 		BufferedImage image = null;
 		try {
@@ -126,42 +119,83 @@ class DigitalCircuitUI {
 		JLabel label1 = new JLabel(icon);
 		Dimension lsize = label1.getPreferredSize();
 
-		label1.addMouseMotionListener(new DragImageListener(){});
-		label1.addMouseListener(new DragImageListener(){});
+		label1.addMouseMotionListener(new DragImageListener(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;});
+		label1.addMouseListener(new DragImageListener(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;});
 		label1.setBounds(100, 100, lsize.width, lsize.height);
-		
+
 		label1.addMouseListener(new PopupListener(){});
-		
 		labels.add(label1);
 		updateUI();
 	}
-	
+
 	static void addGateMenu(){
 		//This function creates a right click menu button for the user to select gate type
-		Gate newGate = null;
 		JMenu submenu = null;
+
+		if(first){
+			circ.setTop(parentGate);
+		}
 		
 		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
 		if(!first){
 			submenu = new JMenu("Add Child Gate");
 		}
-		
+
 		//creating popup menu
 		JMenuItem AND = new JMenuItem("Add AND Gate");
+		
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO: make parent
 				System.out.println("Clicked AND");
-				displayGate("ANDimage.png");
+				final Gate newGate = new AND(null, null);
+				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("ANDimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Cannot add more than 2 children");
+					}				
+				}
+				else{
+					parentGate = new AND(null, null);
+					displayGate("ANDimage.png");
+					first = false;
+				}
 			}
 		});
-		
+
 		JMenuItem OR = new JMenuItem("Add OR Gate");
 		OR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
-				displayGate("ORimage.png");
+				final Gate newGate = new OR(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("ORimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Cannot add more than 2 children");
+					}				
+				}
+				else{
+					parentGate = new OR(null, null);
+					displayGate("ORimage.png");
+					first = false;
+				}
 			}
 		});
 
@@ -169,6 +203,20 @@ class DigitalCircuitUI {
 		NOT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
+				final Gate newGate = new NOT(null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("NOTimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("NOT can only have 1 child");
+					}				
+				}
+				else{
+					parentGate = new NOT(null);
+					displayGate("NOTimage.png");
+					first = false;
+				}
 			}
 		});
 
@@ -176,6 +224,20 @@ class DigitalCircuitUI {
 		NAND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NAND");
+				final Gate newGate = new NAND(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("NANDimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Cannot add more than 2 children");
+					}				
+				}
+				else{
+					parentGate = new NAND(null, null);
+					displayGate("NANDimage.png");
+					first = false;
+				}
 			}
 		});
 
@@ -183,6 +245,20 @@ class DigitalCircuitUI {
 		NOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOR");
+				final Gate newGate = new NOR(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("NORimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Cannot add more than 2 children");
+					}				
+				}
+				else{
+					parentGate = new NOR(null, null);
+					displayGate("NORimage.png");
+					first = false;
+				}
 			}
 		});
 
@@ -190,9 +266,23 @@ class DigitalCircuitUI {
 		XOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked XOR");
+				final Gate newGate = new XOR(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate);
+						displayGate("XORimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Cannot add more than 2 children");
+					}				
+				}
+				else{
+					parentGate = new XOR(null, null);
+					displayGate("XORimage.png");
+					first = false;
+				}
 			}
 		});
-		
+
 		if(first){
 			popup.add(AND);
 			popup.add(OR);
@@ -210,8 +300,7 @@ class DigitalCircuitUI {
 			submenu.add(XOR);
 			popup.add(submenu);
 		}
-		
-		first = false;
+
 		frame.removeMouseListener(frameListener);
 		updateUI();
 	}

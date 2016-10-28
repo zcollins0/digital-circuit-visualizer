@@ -20,7 +20,7 @@ public class Input extends Gate {
 	}
 	
 	@Override
-	public void addChildGate(Gate g, childPosition pos)  throws InvalidNodeException {
+	public void addChildGate(Gate g)  throws InvalidNodeException {
 		throw new InvalidNodeException("Cannot give child to input.");
 	}
 	
