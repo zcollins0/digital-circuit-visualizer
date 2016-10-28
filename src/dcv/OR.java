@@ -9,7 +9,7 @@ public class OR extends Gate {
 
 	@Override
 	public boolean isActive() {
-		return (topChild.isActive() || bottomChild.isActive());
+		return (child1.isActive() || child2.isActive());
 	}
 
 }

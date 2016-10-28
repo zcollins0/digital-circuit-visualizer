@@ -7,10 +7,13 @@ public class PopupListener extends MouseAdapter{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3)
-			System.out.println("Right Clicked");
-			DigitalCircuitUI.addGateMenu();
-			DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
+		if(DigitalCircuitUI.first){
+			if(e.getButton() == MouseEvent.BUTTON3){
+				System.out.println("Right Clicked");
+				DigitalCircuitUI.addGateMenu();
+				DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		}
 	}
 
 	@Override
@@ -28,6 +31,6 @@ public class PopupListener extends MouseAdapter{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
-	
-	
+
+
 }

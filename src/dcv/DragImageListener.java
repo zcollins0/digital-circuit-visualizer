@@ -10,7 +10,13 @@ import javax.swing.JFrame;
 public class DragImageListener extends JFrame implements MouseMotionListener, MouseListener {
 
 	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+		/*if(e.getButton() == MouseEvent.BUTTON3){
+			System.out.println("Call Child Menu");
+			//DigitalCircuitUI.addChildMenu(null);
+			//DigitalCircuitUI.childPopup.show(e.getComponent(), e.getX(), e.getY());
+		}*/
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -39,7 +45,7 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 	        DigitalCircuitUI.mouseX = e.getX();
 	        DigitalCircuitUI.mouseY = e.getY();
 	        JComponent jc = (JComponent)e.getSource();
-		//some offsetting was necessary to get the image to move smoothly and appear in the correct location
+	        //some offsetting was necessary to get the image to move smoothly and appear in the correct location
 	        jc.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY);
 		}	
 	}

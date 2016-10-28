@@ -9,17 +9,17 @@ public class NOT extends Gate {
 
 	@Override
 	public boolean isActive() {
-		return (topChild != null) ? !topChild.isActive() : !bottomChild.isActive();
+		return (child1 != null) ? !child1.isActive() : !child2.isActive();
 	}
 	
 	@Override
 	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
-		if (topChild != null) {
+		if (child1 != null) {
 			throw new InvalidNodeException("Inverter already has a child.");
 		}
 		else {
 			// Note: never allow NOt gate to have bottom child
-			topChild = g;
+			child1 = g;
 		}
 	}
 }
