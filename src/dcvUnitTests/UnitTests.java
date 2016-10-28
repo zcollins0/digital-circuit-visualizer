@@ -140,7 +140,7 @@ public class UnitTests {
 		boolean failed = true;
 		
 		try {
-			A.addChildGate(new AND(null, null), Gate.childPosition.POS_TOP);
+			A.addChildGate(new AND(null, null));
 		}
 		catch (InvalidNodeException e){
 			failed = false;
@@ -157,7 +157,7 @@ public class UnitTests {
 		boolean failed = true;
 		
 		try {
-			gate.addChildGate(B, Gate.childPosition.POS_BOTTOM);
+			gate.addChildGate(B);
 		}
 		catch (InvalidNodeException e){
 			failed = false;
@@ -174,7 +174,7 @@ public class UnitTests {
 		boolean failed = true;
 		
 		try {
-			gate.addChildGate(new OR(null, null), Gate.childPosition.POS_BOTTOM);
+			gate.addChildGate(new OR(null, null));
 		}
 		catch (InvalidNodeException e){
 			failed = false;
