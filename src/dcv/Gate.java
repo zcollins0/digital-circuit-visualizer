@@ -23,7 +23,6 @@ public abstract class Gate {
 	
 	// Method to add a child to selected gate
 	public void addChildGate(Gate g) throws InvalidNodeException {
-		
 			if (child1 == null) {
 				child1 = g;
 			}

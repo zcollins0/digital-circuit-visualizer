@@ -134,7 +134,6 @@ class DigitalCircuitUI {
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		label1.addMouseListener(new PopupListener(){});
-
 		labels.add(label1);
 		updateUI();
 	}
@@ -143,10 +142,10 @@ class DigitalCircuitUI {
 		//This function creates a right click menu button for the user to select gate type
 		JMenu submenu = null;
 
-		/*if(first){
-			circ.setTop(newGate);
-			parentGate = newGate;
-		}*/
+		if(first){
+			circ.setTop(parentGate);
+		}
+		
 		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
 		if(!first){
@@ -155,9 +154,11 @@ class DigitalCircuitUI {
 
 		//creating popup menu
 		JMenuItem AND = new JMenuItem("Add AND Gate");
+		
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Make parent
 				System.out.println("Clicked AND");
 				final Gate newGate = new AND(null, null);
 				if(!first){
