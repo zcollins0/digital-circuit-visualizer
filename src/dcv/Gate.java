@@ -35,7 +35,7 @@ public abstract class Gate extends JLabel{
 			}
 			else if(child2 == null) {
 				child2 = g; 
-				System.out.println("Child 1 position is occupied.Putting in child 2 position");
+				//System.out.println("Child 1 position is occupied.Putting in child 2 position");
 			}
 			else {
 				throw new InvalidNodeException("Child 2 position is occupied.");
