@@ -316,6 +316,24 @@ class DigitalCircuitUI {
 			submenu.add(NAND);
 			submenu.add(NOR);
 			submenu.add(XOR);
+			JMenuItem inp = new JMenu("Set Input Signal");
+			//inp.addActionListener(new ActionListener() {
+				//public void actionPerformed(ActionEvent e) {
+					//System.out.println("Clicked Set Input Signal");
+					final Gate newGate = new Input(inputTag);
+					
+					JMenu subsubmenu = new JMenu();
+					subsubmenu.add("High");
+					subsubmenu.add("Low");
+					inp.add(subsubmenu);
+					newGate.isActive();
+						try {
+							parentGate.addChildGate(newGate);
+							//displayGate("Connector.png");
+						} catch (InvalidNodeException e1) {
+							System.out.println("Cannot add more than 2 children");
+						}				
+			submenu.add(inp);
 			popup.add(submenu);
 		}
 		
