@@ -115,7 +115,30 @@ class DigitalCircuitUI {
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 
-		JLabel label1 = new JLabel(icon);
+		Gate label1 = null;
+		
+		if(imageFile.equals("ANDimage.png")){
+			label1 = new AND(icon);
+		}
+		if(imageFile.equals("ORimage.png")){
+			label1 = new OR(icon);
+		}
+		if(imageFile.equals("NOTimage.png")){
+			label1 = new NOT(icon);
+		}
+		if(imageFile.equals("NANDimage.png")){
+			label1 = new NAND(icon);
+		}
+		if(imageFile.equals("NORimage.png")){
+			label1 = new NOR(icon);
+		}
+		if(imageFile.equals("XORimage.png")){
+			label1 = new XOR(icon);
+		}
+		
+		
+		
+		
 		Dimension lsize = label1.getPreferredSize();
 
 		//Listener to allow image to be dragged
@@ -205,7 +228,8 @@ class DigitalCircuitUI {
 		NOT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
-				final Gate newGate = new NOT(null);
+				Gate tmp = null;
+				final Gate newGate = new NOT(tmp);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
@@ -215,7 +239,7 @@ class DigitalCircuitUI {
 					}				
 				}
 				else{
-					parentGate = new NOT(null);
+					parentGate = new NOT(tmp);
 					displayGate("NOTimage.png");
 					first = false;
 				}

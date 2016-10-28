@@ -1,9 +1,12 @@
 package dcv;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 // Abstract class to represent logic gates. 
 // Has a constructor for convenience in child classes.
 // Only supports 2-input gates right now. Possible future enhancement is to add 3-input gates.
-public abstract class Gate {
+public abstract class Gate extends JLabel{
 	
 	// Enum for which position to put a child gate in
 	public enum childPosition {
@@ -14,6 +17,10 @@ public abstract class Gate {
 
 	Gate child1;
 	Gate child2;
+	
+	public Gate(ImageIcon img){
+		super(img);
+	}
 	
 	// Constructor for convenience in child classes
 	public Gate(Gate top, Gate bottom) {
