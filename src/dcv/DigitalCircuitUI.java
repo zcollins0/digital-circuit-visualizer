@@ -2,35 +2,26 @@ package dcv;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.MenuElement;
-
-import dcv.Gate.childPosition;
-
-import java.io.*;
 
 class DigitalCircuitUI {
 
@@ -105,7 +96,6 @@ class DigitalCircuitUI {
 		constraints.gridy = 0;
 
 		//grabs image of gate from src	
-		File inputFile = new File(imageFile);
 		FileInputStream istream = null;
 		BufferedImage image = null;
 		try {
@@ -129,8 +119,18 @@ class DigitalCircuitUI {
 		JLabel label1 = new JLabel(icon);
 		Dimension lsize = label1.getPreferredSize();
 
-		label1.addMouseMotionListener(new DragImageListener(){});
-		label1.addMouseListener(new DragImageListener(){});
+		label1.addMouseMotionListener(new DragImageListener(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;});
+		label1.addMouseListener(new DragImageListener(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;});
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		label1.addMouseListener(new PopupListener(){});
