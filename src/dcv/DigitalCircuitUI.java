@@ -29,6 +29,7 @@ class DigitalCircuitUI {
 	static ArrayList<Input> inputList;
 	static char inputTag = 'A';
 	static public JPopupMenu popup;
+	static public JPopupMenu inputMenu;
 	static public JFrame frame;
 	static public JPanel panel;
 	static boolean drag = false;
@@ -149,7 +150,14 @@ class DigitalCircuitUI {
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		//Listener on image to create child gates
-		label1.addMouseListener(new PopupListener(){});
+		System.out.println(label1.isInput());
+		if(label1.isInput()){
+			label1.addMouseListener(new InputListener(){});
+		}
+		else{
+			label1.addMouseListener(new PopupListener(){});
+		}
+
 		labels.add(label1);
 		updateUI();
 	}
@@ -300,15 +308,18 @@ class DigitalCircuitUI {
 				}
 			}
 		});
-		
+
 		JMenuItem inp = new JMenuItem("Add Input");
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add Input");
 				final Gate newGate = new Input(inputTag);
+				inputTag++;
+				String buildImgName = Character.toString(inputTag) + "image.png";
+				System.out.println(inputTag);
 				try {
 					parentGate.addChildGate(newGate);
-					displayGate("Aimage.png");
+					displayGate(buildImgName);
 				} catch (InvalidNodeException e1) {
 					System.out.println("Input cannot have children");
 				}
@@ -342,10 +353,35 @@ class DigitalCircuitUI {
 		updateUI();
 	}
 
+	public static void addInputMenu() {
+		inputMenu = new JPopupMenu();
+
+		JMenuItem ACTIVE = new JMenuItem("Make Active");
+		ACTIVE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Make Active");
+				((Input) parentGate).setActive(true);
+				System.out.println(parentGate.isActive());
+			}
+
+		});
+		
+		JMenuItem INACTIVE = new JMenuItem("Make Inactive");
+		INACTIVE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Make Inactive");
+				((Input) parentGate).setActive(false);
+				System.out.println(parentGate.isActive());
+			}
+
+		});
+		inputMenu.add(ACTIVE);
+		inputMenu.add(INACTIVE);
+	}
+
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(
 				new Runnable() { public void run() {DoUI();} });
 
 	}
-
 }
