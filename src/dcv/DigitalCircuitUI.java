@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
 
+import dcv.Gate.childPosition;
+
 import java.io.*;
 
 class DigitalCircuitUI {
@@ -47,6 +49,7 @@ class DigitalCircuitUI {
 	static Circuit circ = new Circuit();
 	static MouseListener frameListener = null;
 	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
+	static Gate parentGate;
 	static void updateUI() {
 		// Call this when you need to redraw
 		for (JLabel l: labels){
@@ -138,9 +141,12 @@ class DigitalCircuitUI {
 	
 	static void addGateMenu(){
 		//This function creates a right click menu button for the user to select gate type
-		Gate newGate = null;
 		JMenu submenu = null;
 		
+		/*if(first){
+			circ.setTop(newGate);
+			parentGate = newGate;
+		}*/
 		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
 		if(!first){
@@ -153,7 +159,26 @@ class DigitalCircuitUI {
 		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked AND");
-				displayGate("ANDimage.png");
+				final Gate newGate = new AND(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate, childPosition.POS_TOP);
+						displayGate("ANDimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Position 1 is occupied. Putting in position 2");
+						try {
+							parentGate.addChildGate(newGate, childPosition.POS_BOTTOM);
+							displayGate("ANDimage.png");
+						} catch (InvalidNodeException e2) {
+							System.out.println("Position 2 is occupied. Cannot add child to gate.");
+						}
+					}
+				}
+				else{
+					parentGate = new AND(null, null);
+					displayGate("ANDimage.png");
+					first = false;
+				}
 			}
 		});
 		
@@ -161,14 +186,52 @@ class DigitalCircuitUI {
 		OR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
-				displayGate("ORimage.png");
+				final Gate newGate = new OR(null, null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate, childPosition.POS_TOP);
+						displayGate("ORimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Position 1 is occupied. Putting in position 2");
+						try {
+							parentGate.addChildGate(newGate, childPosition.POS_BOTTOM);
+							displayGate("ORimage.png");
+						} catch (InvalidNodeException e2) {
+							System.out.println("Position 2 is occupied. Cannot add child to gate.");
+						}
+					}
+				}
+				else{
+					parentGate = new OR(null, null);
+					displayGate("ORimage.png");
+					first = false;
+				}
 			}
 		});
 
 		JMenuItem NOT = new JMenuItem("Add NOT Gate");
 		NOT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked NOT");
+				final Gate newGate = new NOT(null);
+				if(!first){
+					try {
+						parentGate.addChildGate(newGate, childPosition.POS_TOP);
+						displayGate("NOTimage.png");
+					} catch (InvalidNodeException e1) {
+						System.out.println("Position 1 is occupied. Putting in position 2");
+						try {
+							parentGate.addChildGate(newGate, childPosition.POS_BOTTOM);
+							displayGate("NOTimage.png");
+						} catch (InvalidNodeException e2) {
+							System.out.println("Position 2 is occupied. Cannot add child to gate.");
+						}
+					}
+				}
+				else{
+					parentGate = new NOT(null);
+					displayGate("NOTimage.png");
+					first = false;
+				}
 			}
 		});
 
@@ -211,7 +274,6 @@ class DigitalCircuitUI {
 			popup.add(submenu);
 		}
 		
-		first = false;
 		frame.removeMouseListener(frameListener);
 		updateUI();
 	}
