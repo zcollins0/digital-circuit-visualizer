@@ -158,9 +158,10 @@ class DigitalCircuitUI {
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Make parent
+				//TODO: make parent
 				System.out.println("Clicked AND");
 				final Gate newGate = new AND(null, null);
+				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
