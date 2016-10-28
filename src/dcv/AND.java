@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 // Two input AND gate - active when both of its inputs are high
 public class AND extends Gate {
-	
+
 	public AND(ImageIcon img){
 		super(img);
 	}

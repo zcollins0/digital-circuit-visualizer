@@ -142,18 +142,8 @@ class DigitalCircuitUI {
 		Dimension lsize = label1.getPreferredSize();
 
 		//Listener to allow image to be dragged
-		label1.addMouseMotionListener(new DragImageListener(){
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;});
-		label1.addMouseListener(new DragImageListener(){
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;});
+		label1.addMouseMotionListener(new DragImageListener(){});
+		label1.addMouseListener(new DragImageListener(){});
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		//Listener on image to create child gates

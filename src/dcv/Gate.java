@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 // Has a constructor for convenience in child classes.
 // Only supports 2-input gates right now. Possible future enhancement is to add 3-input gates.
 public abstract class Gate extends JLabel{
-	
+
 	// Enum for which position to put a child gate in
 	public enum childPosition {
 		// TODO: Consider implementation for 3 input gate

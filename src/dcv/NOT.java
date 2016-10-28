@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 // 1-input inverter. Should only have one child.
 public class NOT extends Gate {
-
+	
 	public NOT(Gate top) {
 		super(top, null);
 	}
