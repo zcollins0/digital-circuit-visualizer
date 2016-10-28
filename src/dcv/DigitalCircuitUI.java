@@ -22,9 +22,11 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
 
 import java.io.*;
 
@@ -43,6 +45,7 @@ class DigitalCircuitUI {
 	static int clickY = 0;
 	static boolean first = true; 
 	static Circuit circ = new Circuit();
+	static MouseListener frameListener = null;
 	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	static void updateUI() {
 		// Call this when you need to redraw
@@ -67,25 +70,26 @@ class DigitalCircuitUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel emptyLabel = new JLabel("");
 		frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-		
+
 		panel.setLayout(null);
-		
+
 		JLabel label = new JLabel("Right Click to Select Gate Type. First gate selected will be top gate");
 		Dimension size = label.getPreferredSize();
 		label.setBounds(10, 5, size.width, size.height);
-		
+
 		JButton button = new JButton();
 		button.setText("Evaluate");
 		Dimension bsize = button.getPreferredSize();
 		button.setBounds(480, 5, bsize.width, bsize.height);
-		
+
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
-
-		frame.addMouseListener(new PopupListener());
+		
+		frameListener = new PopupListener();
+		frame.addMouseListener(frameListener);
 
 		frame.setVisible(true);
 		// Maybe check out the "Placeable" object as well.
@@ -121,84 +125,94 @@ class DigitalCircuitUI {
 		//allows image to be dragged by user
 		JLabel label1 = new JLabel(icon);
 		Dimension lsize = label1.getPreferredSize();
-		
+
 		label1.addMouseMotionListener(new DragImageListener(){});
 		label1.addMouseListener(new DragImageListener(){});
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 		
+		label1.addMouseListener(new PopupListener(){});
+		
 		labels.add(label1);
 		updateUI();
 	}
-
+	
 	static void addGateMenu(){
 		//This function creates a right click menu button for the user to select gate type
 		Gate newGate = null;
-
-		if (first)
-			circ.setTop(newGate);
-		first = false;
-
+		JMenu submenu = null;
+		
+		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
-
+		if(!first){
+			submenu = new JMenu("Add Child Gate");
+		}
+		
 		//creating popup menu
-		JMenuItem addGate = new JMenuItem("Add AND Gate");
-		addGate.addMouseListener(new PopupListener());
-
+		JMenuItem AND = new JMenuItem("Add AND Gate");
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
-		addGate.addActionListener(new ActionListener() {
+		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked AND");
 				displayGate("ANDimage.png");
 			}
 		});
-		popup.add(addGate);
-
-		addGate = new JMenuItem("Add OR Gate");
-		addGate.addMouseListener(new PopupListener());
-		addGate.addActionListener(new ActionListener() {
+		
+		JMenuItem OR = new JMenuItem("Add OR Gate");
+		OR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
 				displayGate("ORimage.png");
 			}
 		});
-		popup.add(addGate);
 
-		addGate = new JMenuItem("Add NOT Gate");
-		addGate.addMouseListener(new PopupListener());
-		addGate.addActionListener(new ActionListener() {
+		JMenuItem NOT = new JMenuItem("Add NOT Gate");
+		NOT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
 			}
 		});
-		popup.add(addGate);
 
-		addGate = new JMenuItem("Add NAND Gate");
-		addGate.addMouseListener(new PopupListener());
-		addGate.addActionListener(new ActionListener() {
+		JMenuItem NAND = new JMenuItem("Add NAND Gate");
+		NAND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NAND");
 			}
 		});
-		popup.add(addGate);
 
-		addGate = new JMenuItem("Add NOR Gate");
-		addGate.addMouseListener(new PopupListener());
-		addGate.addActionListener(new ActionListener() {
+		JMenuItem NOR = new JMenuItem("Add NOR Gate");
+		NOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOR");
 			}
 		});
-		popup.add(addGate);
 
-		addGate = new JMenuItem("Add XOR Gate");
-		addGate.addMouseListener(new PopupListener());
-		addGate.addActionListener(new ActionListener() {
+		JMenuItem XOR = new JMenuItem("Add XOR Gate");
+		XOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked XOR");
 			}
 		});
-		popup.add(addGate);
-
+		
+		if(first){
+			popup.add(AND);
+			popup.add(OR);
+			popup.add(NOT);
+			popup.add(NAND);
+			popup.add(NOR);
+			popup.add(XOR);
+		}
+		else{
+			submenu.add(AND);
+			submenu.add(OR);
+			submenu.add(NOT);
+			submenu.add(NAND);
+			submenu.add(NOR);
+			submenu.add(XOR);
+			popup.add(submenu);
+		}
+		
+		first = false;
+		frame.removeMouseListener(frameListener);
 		updateUI();
 	}
 

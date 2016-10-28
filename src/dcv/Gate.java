@@ -12,47 +12,47 @@ public abstract class Gate {
 		POS_BOTTOM
 	}
 
-	Gate topChild;
-	Gate bottomChild;
+	Gate child1;
+	Gate child2;
 	
 	// Constructor for convenience in child classes
 	public Gate(Gate top, Gate bottom) {
-		topChild = top;
-		bottomChild = bottom;
+		child1 = top;
+		child2 = bottom;
 	}
 	
 	// Method to add a child to selected gate
 	public void addChildGate(Gate g, childPosition pos) throws InvalidNodeException {
 		if (pos == childPosition.POS_TOP) {
-			if (topChild == null) {
-				topChild = g;
+			if (child1 == null) {
+				child1 = g;
 			}
 			else {
-				throw new InvalidNodeException("Top child position is occupied.");
+				throw new InvalidNodeException("Child 1 position is occupied.");
 			}
 		}
 		else {
-			if (bottomChild == null) {
-				bottomChild = g;
+			if (child2 == null) {
+				child2 = g;
 			}
 			else {
-				throw new InvalidNodeException("Bottom child position is occupied.");
+				throw new InvalidNodeException("Child 2 position is occupied.");
 			}
 		}
 	}
 	
 	// Method to add input to selected gate
 	public void addInput() throws InvalidNodeException {
-		if (topChild != null) {
+		if (child1 != null) {
 			Input tempInput = new Input(DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
-			topChild = tempInput;
+			child1 = tempInput;
 			DigitalCircuitUI.inputList.add(tempInput);
 		}
-		else if (bottomChild != null) {
+		else if (child2 != null) {
 			Input tempInput = new Input(DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
-			bottomChild = tempInput;
+			child2 = tempInput;
 			DigitalCircuitUI.inputList.add(tempInput);
 		}
 		else {
