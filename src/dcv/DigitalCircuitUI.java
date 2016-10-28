@@ -81,7 +81,7 @@ class DigitalCircuitUI {
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
-		
+
 		//create listener for right click popup menu
 		frameListener = new PopupListener();
 		frame.addMouseListener(frameListener);
@@ -116,31 +116,33 @@ class DigitalCircuitUI {
 		ImageIcon icon = new ImageIcon(temp);
 
 		Gate label1 = null;
-		
+
 		if(imageFile.equals("ANDimage.png")){
 			label1 = new AND(icon);
 		}
-		if(imageFile.equals("ORimage.png")){
+		else if(imageFile.equals("ORimage.png")){
 			label1 = new OR(icon);
 		}
-		if(imageFile.equals("NOTimage.png")){
+		else if(imageFile.equals("NOTimage.png")){
 			label1 = new NOT(icon);
 		}
-		if(imageFile.equals("NANDimage.png")){
+		else if(imageFile.equals("NANDimage.png")){
 			label1 = new NAND(icon);
 		}
-		if(imageFile.equals("NORimage.png")){
+		else if(imageFile.equals("NORimage.png")){
 			label1 = new NOR(icon);
 		}
-		if(imageFile.equals("XORimage.png")){
+		else if(imageFile.equals("XORimage.png")){
 			label1 = new XOR(icon);
 		}
-		
-		
-		
-		
-		Dimension lsize = label1.getPreferredSize();
+		else{
+			label1 = new Input(icon);
+		}
 
+
+
+
+		Dimension lsize = label1.getPreferredSize();
 		//Listener to allow image to be dragged
 		label1.addMouseMotionListener(new DragImageListener(){});
 		label1.addMouseListener(new DragImageListener(){});
@@ -159,7 +161,7 @@ class DigitalCircuitUI {
 		if(first){
 			circ.setTop(parentGate);
 		}
-		
+
 		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
 		if(!first){
@@ -168,7 +170,7 @@ class DigitalCircuitUI {
 
 		//creating popup menu
 		JMenuItem AND = new JMenuItem("Add AND Gate");
-		
+
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		AND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -298,6 +300,21 @@ class DigitalCircuitUI {
 				}
 			}
 		});
+		
+		JMenuItem inp = new JMenuItem("Add Input");
+		inp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Clicked Add Input");
+				final Gate newGate = new Input(inputTag);
+				try {
+					parentGate.addChildGate(newGate);
+					displayGate("Aimage.png");
+				} catch (InvalidNodeException e1) {
+					System.out.println("Input cannot have children");
+				}
+			}
+		});
+
 
 		//add menu items to the popup menu if first gate
 		if(first){
@@ -316,27 +333,10 @@ class DigitalCircuitUI {
 			submenu.add(NAND);
 			submenu.add(NOR);
 			submenu.add(XOR);
-			JMenuItem inp = new JMenu("Set Input Signal");
-			//inp.addActionListener(new ActionListener() {
-				//public void actionPerformed(ActionEvent e) {
-					//System.out.println("Clicked Set Input Signal");
-					final Gate newGate = new Input(inputTag);
-					
-					JMenu subsubmenu = new JMenu();
-					subsubmenu.add("High");
-					subsubmenu.add("Low");
-					inp.add(subsubmenu);
-					newGate.isActive();
-						try {
-							parentGate.addChildGate(newGate);
-							//displayGate("Connector.png");
-						} catch (InvalidNodeException e1) {
-							System.out.println("Cannot add more than 2 children");
-						}				
 			submenu.add(inp);
 			popup.add(submenu);
 		}
-		
+
 		//remove frame listener so it's only possible to add child gates after first gate
 		frame.removeMouseListener(frameListener);
 		updateUI();

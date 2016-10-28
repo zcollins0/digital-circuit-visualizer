@@ -1,5 +1,7 @@
 package dcv;
 
+import javax.swing.ImageIcon;
+
 // Class to implement an input. Should not have any children.
 // The value of the input is explicitly set when solving the circuit.
 public class Input extends Gate {
@@ -12,7 +14,16 @@ public class Input extends Gate {
 		this.tag = tag;
 	}
 	
+	public Input(ImageIcon img){
+		super(img);
+	}
+	
 	private boolean signal;
+	
+	@Override
+	public boolean isInput(){
+		return true;
+	}
 	
 	@Override
 	public boolean isActive() {

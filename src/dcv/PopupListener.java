@@ -9,11 +9,21 @@ public class PopupListener extends MouseAdapter{
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
 			System.out.println("Right Clicked");
+
 			if(!DigitalCircuitUI.first){
 				DigitalCircuitUI.parentGate = (Gate) (e.getComponent());
+				if (!DigitalCircuitUI.parentGate.isInput()){
+					DigitalCircuitUI.addGateMenu();
+					DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+				else{
+					System.out.println("Can't add child to input");
+				}
 			}
-			DigitalCircuitUI.addGateMenu();
-			DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
+			else{
+				DigitalCircuitUI.addGateMenu();
+				DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
+			}
 		}
 	}
 
