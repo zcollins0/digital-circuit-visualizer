@@ -58,13 +58,13 @@ class DigitalCircuitUI {
 		// A Graphics2D might be the best way to implement this. We'll have to draw lines
 		// to represent wires connecting circuit components.
 
-		// Maybe check out the "Placeable" object as well
 		frame = new JFrame("Digital Circuit Visualizer");
 		panel = new JPanel();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JLabel emptyLabel = new JLabel("");
 		frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
 
+		//need null layout so users can drag gates
 		panel.setLayout(null);
 
 		JLabel label = new JLabel("Right Click to Select Gate Type. First gate selected will be top gate");
@@ -81,12 +81,12 @@ class DigitalCircuitUI {
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
-
+		
+		//create listener for right click popup menu
 		frameListener = new PopupListener();
 		frame.addMouseListener(frameListener);
 
 		frame.setVisible(true);
-		// Maybe check out the "Placeable" object as well.
 	}
 
 	static void displayGate(String imageFile){
@@ -115,10 +115,10 @@ class DigitalCircuitUI {
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 
-		//allows image to be dragged by user
 		JLabel label1 = new JLabel(icon);
 		Dimension lsize = label1.getPreferredSize();
 
+		//Listener to allow image to be dragged
 		label1.addMouseMotionListener(new DragImageListener(){
 
 			/**
@@ -133,6 +133,7 @@ class DigitalCircuitUI {
 			private static final long serialVersionUID = 1L;});
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
+		//Listener on image to create child gates
 		label1.addMouseListener(new PopupListener(){});
 		labels.add(label1);
 		updateUI();
@@ -163,6 +164,7 @@ class DigitalCircuitUI {
 				final Gate newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
+					//Only allow for 2 children
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate("ANDimage.png");
@@ -283,6 +285,7 @@ class DigitalCircuitUI {
 			}
 		});
 
+		//add menu items to the popup menu if first gate
 		if(first){
 			popup.add(AND);
 			popup.add(OR);
@@ -291,6 +294,7 @@ class DigitalCircuitUI {
 			popup.add(NOR);
 			popup.add(XOR);
 		}
+		//add menu items to the submenu if not first gate
 		else{
 			submenu.add(AND);
 			submenu.add(OR);
@@ -300,7 +304,8 @@ class DigitalCircuitUI {
 			submenu.add(XOR);
 			popup.add(submenu);
 		}
-
+		
+		//remove frame listener so it's only possible to add child gates after first gate
 		frame.removeMouseListener(frameListener);
 		updateUI();
 	}
