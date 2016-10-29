@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
 class DigitalCircuitUI {
 
 	static Circuit circuit;
-	static ArrayList<Input> inputList;
+	static ArrayList<Input> inputList = new ArrayList<Input>();
 	static char inputTag = 'A';
 	static public JPopupMenu popup;
 	static public JPopupMenu inputMenu;
@@ -140,9 +140,6 @@ class DigitalCircuitUI {
 			label1 = new Input(icon);
 		}
 
-
-
-
 		Dimension lsize = label1.getPreferredSize();
 		//Listener to allow image to be dragged
 		label1.addMouseMotionListener(new DragImageListener(){});
@@ -150,7 +147,6 @@ class DigitalCircuitUI {
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		//Listener on image to create child gates
-		System.out.println(label1.isInput());
 		if(label1.isInput()){
 			label1.addMouseListener(new InputListener(){});
 		}
@@ -314,15 +310,17 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add Input");
 				final Gate newGate = new Input(inputTag);
-				inputTag++;
-				String buildImgName = Character.toString(inputTag) + "image.png";
-				System.out.println(inputTag);
+				inputList.add((Input) newGate);
 				try {
 					parentGate.addChildGate(newGate);
-					displayGate(buildImgName);
+
 				} catch (InvalidNodeException e1) {
 					System.out.println("Input cannot have children");
 				}
+
+				String buildImgName = Character.toString(inputTag) + "image.png";
+				displayGate(buildImgName);
+				inputTag++;
 			}
 		});
 
@@ -361,17 +359,15 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Active");
 				((Input) parentGate).setActive(true);
-				System.out.println(parentGate.isActive());
 			}
 
 		});
-		
+
 		JMenuItem INACTIVE = new JMenuItem("Make Inactive");
 		INACTIVE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Inactive");
 				((Input) parentGate).setActive(false);
-				System.out.println(parentGate.isActive());
 			}
 
 		});

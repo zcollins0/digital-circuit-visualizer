@@ -15,8 +15,8 @@ public abstract class Gate extends JLabel{
 		POS_BOTTOM
 	}
 
-	Gate child1;
-	Gate child2;
+	Gate child1 = null;
+	Gate child2 = null;
 	
 	public Gate(ImageIcon img){
 		super(img);
@@ -46,7 +46,7 @@ public abstract class Gate extends JLabel{
 	}
 	
 	// Method to add input to selected gate
-	public void addInput() throws InvalidNodeException {
+	/*public void addInput() throws InvalidNodeException {
 		if (child1 != null) {
 			Input tempInput = new Input(DigitalCircuitUI.inputTag);
 			DigitalCircuitUI.inputTag++;
@@ -62,7 +62,7 @@ public abstract class Gate extends JLabel{
 		else {
 			throw new InvalidNodeException("The selected gate is full.");
 		}
-	}
+	}*/
 	
 	// Returns whether the gate is active based on its inputs
 	public abstract boolean isActive();

@@ -8,7 +8,6 @@ public class InputListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
-			System.out.println("Made it");
 			DigitalCircuitUI.parentGate = (Gate) (e.getComponent());
 			DigitalCircuitUI.addInputMenu();
 			DigitalCircuitUI.inputMenu.show(e.getComponent(), e.getX(), e.getY());

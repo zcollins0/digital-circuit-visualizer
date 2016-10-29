@@ -8,11 +8,11 @@ public class PopupListener extends MouseAdapter{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
-			System.out.println("Right Clicked");
 
 			if(!DigitalCircuitUI.first){
 				DigitalCircuitUI.parentGate = (Gate) (e.getComponent());
 			}
+			
 			DigitalCircuitUI.addGateMenu();
 			DigitalCircuitUI.popup.show(e.getComponent(), e.getX(), e.getY());
 		}
