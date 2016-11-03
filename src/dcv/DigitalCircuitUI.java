@@ -116,23 +116,149 @@ class DigitalCircuitUI {
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 
+<<<<<<< HEAD
 		label1.setIcon(icon);
 		
 		Dimension lsize = label1.getPreferredSize();
-		//Listener to allow image to be dragged
-		label1.addMouseMotionListener(new DragImageListener(){});
-		label1.addMouseListener(new DragImageListener(){});
-		label1.setBounds(100, 100, lsize.width, lsize.height);
+=======
+		Gate newGate = null;
 
-		//Listener on image to create child gates
-		if(((Gate) label1).isInput()){
-			label1.addMouseListener(new InputListener(){});
+
+		if(imageFile.equals("ANDimage.png")){
+			newGate = new AND(null, null);
+			//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
+			if(!first){
+				//Only allow for 2 children
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+		}
+		else if(imageFile.equals("ORimage.png")){
+			newGate = new OR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+		}
+		else if(imageFile.equals("NOTimage.png")){
+			NOT tmp = null;
+			newGate = new NOT(tmp);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("NOT can only have 1 child");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+			
+		}
+		else if(imageFile.equals("NANDimage.png")){
+			newGate = new NAND(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+		}
+		else if(imageFile.equals("NORimage.png")){
+			newGate = new NOR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+		}
+		else if(imageFile.equals("XORimage.png")){
+			newGate = new XOR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else{
-			label1.addMouseListener(new PopupListener(){});
+			newGate = new Input(inputTag);
+			((Input) newGate).setActive(true);
+			inputList.add((Input) newGate);
+			newGate.setIcon(icon);
+			try {
+				parentGate.addChildGate(newGate);
+
+			} catch (InvalidNodeException e1) {
+				System.out.println("Input cannot have children");
+			}
+			inputTag++;
+		}
+		
+		Dimension lsize = newGate.getPreferredSize();
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
+		//Listener to allow image to be dragged
+		newGate.addMouseMotionListener(new DragImageListener(){});
+		newGate.addMouseListener(new DragImageListener(){});
+		newGate.setBounds(100, 100, lsize.width, lsize.height);
+
+		//Listener on image to create child gates
+<<<<<<< HEAD
+		if(((Gate) label1).isInput()){
+			label1.addMouseListener(new InputListener(){});
+=======
+		if(newGate.isInput()){
+			newGate.addMouseListener(new InputListener(){});
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
+		}
+		else{
+			newGate.addMouseListener(new PopupListener(){});
 		}
 
-		labels.add(label1);
+		labels.add(newGate);
 		updateUI();
 	}
 
@@ -158,6 +284,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				//TODO: make parent
 				System.out.println("Clicked AND");
+<<<<<<< HEAD
 				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
@@ -174,6 +301,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "ANDimage.png");
 					first = false;
 				}
+=======
+				displayGate("ANDimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -181,6 +311,7 @@ class DigitalCircuitUI {
 		or.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
+<<<<<<< HEAD
 				OR newGate = new OR(null, null);
 				if(!first){
 					try {
@@ -195,6 +326,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "ORimage.png");
 					first = false;
 				}
+=======
+				displayGate("ORimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -202,6 +336,7 @@ class DigitalCircuitUI {
 		not.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
+<<<<<<< HEAD
 				Gate tmp = null;
 				NOT newGate = new NOT(tmp);
 				if(!first){
@@ -217,6 +352,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NOTimage.png");
 					first = false;
 				}
+=======
+				displayGate("NOTimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -224,6 +362,7 @@ class DigitalCircuitUI {
 		nand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NAND");
+<<<<<<< HEAD
 				NAND newGate = new NAND(null, null);
 				if(!first){
 					try {
@@ -238,6 +377,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NANDimage.png");
 					first = false;
 				}
+=======
+				displayGate("NANDimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -245,6 +387,7 @@ class DigitalCircuitUI {
 		nor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOR");
+<<<<<<< HEAD
 				NOR newGate = new NOR(null, null);
 				if(!first){
 					try {
@@ -259,6 +402,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NORimage.png");
 					first = false;
 				}
+=======
+				displayGate("NORimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -266,6 +412,7 @@ class DigitalCircuitUI {
 		xor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked XOR");
+<<<<<<< HEAD
 				XOR newGate = new XOR(null, null);
 				if(!first){
 					try {
@@ -280,6 +427,9 @@ class DigitalCircuitUI {
 					displayGate(newGate, "XORimage.png");
 					first = false;
 				}
+=======
+				displayGate("XORimage.png");
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 
@@ -287,6 +437,7 @@ class DigitalCircuitUI {
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add Input");
+<<<<<<< HEAD
 				Input newGate = new Input(inputTag);
 				inputList.add(newGate);
 				try {
@@ -299,6 +450,10 @@ class DigitalCircuitUI {
 				String buildImgName = Character.toString(inputTag) + "image.png";
 				displayGate(newGate, buildImgName);
 				inputTag++;
+=======
+				String buildImgName = Character.toString(inputTag) + "image.png";
+				displayGate(buildImgName);
+>>>>>>> bc98ca52cbfd15bf39f403e2877033607dc7fb8b
 			}
 		});
 

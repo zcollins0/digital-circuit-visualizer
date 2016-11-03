@@ -44,25 +44,7 @@ public abstract class Gate extends JLabel{
 				throw new InvalidNodeException("Child 2 position is occupied.");
 			}
 	}
-	
-	// Method to add input to selected gate
-	/*public void addInput() throws InvalidNodeException {
-		if (child1 != null) {
-			Input tempInput = new Input(DigitalCircuitUI.inputTag);
-			DigitalCircuitUI.inputTag++;
-			child1 = tempInput;
-			DigitalCircuitUI.inputList.add(tempInput);
-		}
-		else if (child2 != null) {
-			Input tempInput = new Input(DigitalCircuitUI.inputTag);
-			DigitalCircuitUI.inputTag++;
-			child2 = tempInput;
-			DigitalCircuitUI.inputList.add(tempInput);
-		}
-		else {
-			throw new InvalidNodeException("The selected gate is full.");
-		}
-	}*/
+
 	
 	// Returns whether the gate is active based on its inputs
 	public abstract boolean isActive();
