@@ -116,45 +116,138 @@ class DigitalCircuitUI {
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 
-		Gate label1 = null;
+		Gate newGate = null;
+
 
 		if(imageFile.equals("ANDimage.png")){
-			label1 = new AND(icon);
+			newGate = new AND(null, null);
+			//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
+			if(!first){
+				//Only allow for 2 children
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else if(imageFile.equals("ORimage.png")){
-			label1 = new OR(icon);
+			newGate = new OR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else if(imageFile.equals("NOTimage.png")){
-			label1 = new NOT(icon);
+			NOT tmp = null;
+			newGate = new NOT(tmp);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("NOT can only have 1 child");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
+			
 		}
 		else if(imageFile.equals("NANDimage.png")){
-			label1 = new NAND(icon);
+			newGate = new NAND(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else if(imageFile.equals("NORimage.png")){
-			label1 = new NOR(icon);
+			newGate = new NOR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else if(imageFile.equals("XORimage.png")){
-			label1 = new XOR(icon);
+			newGate = new XOR(null, null);
+			if(!first){
+				try {
+					parentGate.addChildGate(newGate);
+					newGate.setIcon(icon);
+				} catch (InvalidNodeException e1) {
+					System.out.println("Cannot add more than 2 children");
+				}				
+			}
+			else{
+				parentGate = newGate;
+				newGate.setIcon(icon);
+				first = false;
+			}
 		}
 		else{
-			label1 = new Input(icon);
-		}
+			newGate = new Input(inputTag);
+			((Input) newGate).setActive(true);
+			inputList.add((Input) newGate);
+			newGate.setIcon(icon);
+			try {
+				parentGate.addChildGate(newGate);
 
-		Dimension lsize = label1.getPreferredSize();
+			} catch (InvalidNodeException e1) {
+				System.out.println("Input cannot have children");
+			}
+			inputTag++;
+		}
+		
+		Dimension lsize = newGate.getPreferredSize();
 		//Listener to allow image to be dragged
-		label1.addMouseMotionListener(new DragImageListener(){});
-		label1.addMouseListener(new DragImageListener(){});
-		label1.setBounds(100, 100, lsize.width, lsize.height);
+		newGate.addMouseMotionListener(new DragImageListener(){});
+		newGate.addMouseListener(new DragImageListener(){});
+		newGate.setBounds(100, 100, lsize.width, lsize.height);
 
 		//Listener on image to create child gates
-		if(label1.isInput()){
-			label1.addMouseListener(new InputListener(){});
+		if(newGate.isInput()){
+			newGate.addMouseListener(new InputListener(){});
 		}
 		else{
-			label1.addMouseListener(new PopupListener(){});
+			newGate.addMouseListener(new PopupListener(){});
 		}
 
-		labels.add(label1);
+		labels.add(newGate);
 		updateUI();
 	}
 
@@ -180,22 +273,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				//TODO: make parent
 				System.out.println("Clicked AND");
-				final Gate newGate = new AND(null, null);
-				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
-				if(!first){
-					//Only allow for 2 children
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("ANDimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("Cannot add more than 2 children");
-					}				
-				}
-				else{
-					parentGate = new AND(null, null);
-					displayGate("ANDimage.png");
-					first = false;
-				}
+				displayGate("ANDimage.png");
 			}
 		});
 
@@ -203,20 +281,7 @@ class DigitalCircuitUI {
 		OR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
-				final Gate newGate = new OR(null, null);
-				if(!first){
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("ORimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("Cannot add more than 2 children");
-					}				
-				}
-				else{
-					parentGate = new OR(null, null);
-					displayGate("ORimage.png");
-					first = false;
-				}
+				displayGate("ORimage.png");
 			}
 		});
 
@@ -224,21 +289,7 @@ class DigitalCircuitUI {
 		NOT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
-				Gate tmp = null;
-				final Gate newGate = new NOT(tmp);
-				if(!first){
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("NOTimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("NOT can only have 1 child");
-					}				
-				}
-				else{
-					parentGate = new NOT(tmp);
-					displayGate("NOTimage.png");
-					first = false;
-				}
+				displayGate("NOTimage.png");
 			}
 		});
 
@@ -246,20 +297,7 @@ class DigitalCircuitUI {
 		NAND.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NAND");
-				final Gate newGate = new NAND(null, null);
-				if(!first){
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("NANDimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("Cannot add more than 2 children");
-					}				
-				}
-				else{
-					parentGate = new NAND(null, null);
-					displayGate("NANDimage.png");
-					first = false;
-				}
+				displayGate("NANDimage.png");
 			}
 		});
 
@@ -267,20 +305,7 @@ class DigitalCircuitUI {
 		NOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOR");
-				final Gate newGate = new NOR(null, null);
-				if(!first){
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("NORimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("Cannot add more than 2 children");
-					}				
-				}
-				else{
-					parentGate = new NOR(null, null);
-					displayGate("NORimage.png");
-					first = false;
-				}
+				displayGate("NORimage.png");
 			}
 		});
 
@@ -288,20 +313,7 @@ class DigitalCircuitUI {
 		XOR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked XOR");
-				final Gate newGate = new XOR(null, null);
-				if(!first){
-					try {
-						parentGate.addChildGate(newGate);
-						displayGate("XORimage.png");
-					} catch (InvalidNodeException e1) {
-						System.out.println("Cannot add more than 2 children");
-					}				
-				}
-				else{
-					parentGate = new XOR(null, null);
-					displayGate("XORimage.png");
-					first = false;
-				}
+				displayGate("XORimage.png");
 			}
 		});
 
@@ -309,18 +321,8 @@ class DigitalCircuitUI {
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add Input");
-				final Gate newGate = new Input(inputTag);
-				inputList.add((Input) newGate);
-				try {
-					parentGate.addChildGate(newGate);
-
-				} catch (InvalidNodeException e1) {
-					System.out.println("Input cannot have children");
-				}
-
 				String buildImgName = Character.toString(inputTag) + "image.png";
 				displayGate(buildImgName);
-				inputTag++;
 			}
 		});
 
