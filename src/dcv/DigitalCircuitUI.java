@@ -90,7 +90,7 @@ class DigitalCircuitUI {
 		frame.setVisible(true);
 	}
 
-	static void displayGate(String imageFile){
+	static void displayGate(JLabel label1, String imageFile){
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -116,30 +116,8 @@ class DigitalCircuitUI {
 		Image temp = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 
-		Gate label1 = null;
-
-		if(imageFile.equals("ANDimage.png")){
-			label1 = new AND(icon);
-		}
-		else if(imageFile.equals("ORimage.png")){
-			label1 = new OR(icon);
-		}
-		else if(imageFile.equals("NOTimage.png")){
-			label1 = new NOT(icon);
-		}
-		else if(imageFile.equals("NANDimage.png")){
-			label1 = new NAND(icon);
-		}
-		else if(imageFile.equals("NORimage.png")){
-			label1 = new NOR(icon);
-		}
-		else if(imageFile.equals("XORimage.png")){
-			label1 = new XOR(icon);
-		}
-		else{
-			label1 = new Input(icon);
-		}
-
+		label1.setIcon(icon);
+		
 		Dimension lsize = label1.getPreferredSize();
 		//Listener to allow image to be dragged
 		label1.addMouseMotionListener(new DragImageListener(){});
@@ -147,7 +125,7 @@ class DigitalCircuitUI {
 		label1.setBounds(100, 100, lsize.width, lsize.height);
 
 		//Listener on image to create child gates
-		if(label1.isInput()){
+		if(((Gate) label1).isInput()){
 			label1.addMouseListener(new InputListener(){});
 		}
 		else{
@@ -173,133 +151,133 @@ class DigitalCircuitUI {
 		}
 
 		//creating popup menu
-		JMenuItem AND = new JMenuItem("Add AND Gate");
+		JMenuItem and = new JMenuItem("Add AND Gate");
 
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
-		AND.addActionListener(new ActionListener() {
+		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO: make parent
 				System.out.println("Clicked AND");
-				final Gate newGate = new AND(null, null);
+				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
 					//Only allow for 2 children
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("ANDimage.png");
+						displayGate(newGate, "ANDimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
 				}
 				else{
-					parentGate = new AND(null, null);
-					displayGate("ANDimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "ANDimage.png");
 					first = false;
 				}
 			}
 		});
 
-		JMenuItem OR = new JMenuItem("Add OR Gate");
-		OR.addActionListener(new ActionListener() {
+		JMenuItem or = new JMenuItem("Add OR Gate");
+		or.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked OR");
-				final Gate newGate = new OR(null, null);
+				OR newGate = new OR(null, null);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("ORimage.png");
+						displayGate(newGate, "ORimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
 				}
 				else{
-					parentGate = new OR(null, null);
-					displayGate("ORimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "ORimage.png");
 					first = false;
 				}
 			}
 		});
 
-		JMenuItem NOT = new JMenuItem("Add NOT Gate");
-		NOT.addActionListener(new ActionListener() {
+		JMenuItem not = new JMenuItem("Add NOT Gate");
+		not.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOT");
 				Gate tmp = null;
-				final Gate newGate = new NOT(tmp);
+				NOT newGate = new NOT(tmp);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("NOTimage.png");
+						displayGate(newGate, "NOTimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("NOT can only have 1 child");
 					}				
 				}
 				else{
-					parentGate = new NOT(tmp);
-					displayGate("NOTimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "NOTimage.png");
 					first = false;
 				}
 			}
 		});
 
-		JMenuItem NAND = new JMenuItem("Add NAND Gate");
-		NAND.addActionListener(new ActionListener() {
+		JMenuItem nand = new JMenuItem("Add NAND Gate");
+		nand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NAND");
-				final Gate newGate = new NAND(null, null);
+				NAND newGate = new NAND(null, null);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("NANDimage.png");
+						displayGate(newGate, "NANDimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
 				}
 				else{
-					parentGate = new NAND(null, null);
-					displayGate("NANDimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "NANDimage.png");
 					first = false;
 				}
 			}
 		});
 
-		JMenuItem NOR = new JMenuItem("Add NOR Gate");
-		NOR.addActionListener(new ActionListener() {
+		JMenuItem nor = new JMenuItem("Add NOR Gate");
+		nor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked NOR");
-				final Gate newGate = new NOR(null, null);
+				NOR newGate = new NOR(null, null);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("NORimage.png");
+						displayGate(newGate, "NORimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
 				}
 				else{
-					parentGate = new NOR(null, null);
-					displayGate("NORimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "NORimage.png");
 					first = false;
 				}
 			}
 		});
 
-		JMenuItem XOR = new JMenuItem("Add XOR Gate");
-		XOR.addActionListener(new ActionListener() {
+		JMenuItem xor = new JMenuItem("Add XOR Gate");
+		xor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked XOR");
-				final Gate newGate = new XOR(null, null);
+				XOR newGate = new XOR(null, null);
 				if(!first){
 					try {
 						parentGate.addChildGate(newGate);
-						displayGate("XORimage.png");
+						displayGate(newGate, "XORimage.png");
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
 				}
 				else{
-					parentGate = new XOR(null, null);
-					displayGate("XORimage.png");
+					parentGate = newGate;
+					displayGate(newGate, "XORimage.png");
 					first = false;
 				}
 			}
@@ -309,8 +287,8 @@ class DigitalCircuitUI {
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Add Input");
-				final Gate newGate = new Input(inputTag);
-				inputList.add((Input) newGate);
+				Input newGate = new Input(inputTag);
+				inputList.add(newGate);
 				try {
 					parentGate.addChildGate(newGate);
 
@@ -319,7 +297,7 @@ class DigitalCircuitUI {
 				}
 
 				String buildImgName = Character.toString(inputTag) + "image.png";
-				displayGate(buildImgName);
+				displayGate(newGate, buildImgName);
 				inputTag++;
 			}
 		});
@@ -327,21 +305,21 @@ class DigitalCircuitUI {
 
 		//add menu items to the popup menu if first gate
 		if(first){
-			popup.add(AND);
-			popup.add(OR);
-			popup.add(NOT);
-			popup.add(NAND);
-			popup.add(NOR);
-			popup.add(XOR);
+			popup.add(and);
+			popup.add(or);
+			popup.add(not);
+			popup.add(nand);
+			popup.add(nor);
+			popup.add(xor);
 		}
 		//add menu items to the submenu if not first gate
 		else{
-			submenu.add(AND);
-			submenu.add(OR);
-			submenu.add(NOT);
-			submenu.add(NAND);
-			submenu.add(NOR);
-			submenu.add(XOR);
+			submenu.add(and);
+			submenu.add(or);
+			submenu.add(not);
+			submenu.add(nand);
+			submenu.add(nor);
+			submenu.add(xor);
 			submenu.add(inp);
 			popup.add(submenu);
 		}
