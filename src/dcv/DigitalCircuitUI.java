@@ -347,6 +347,11 @@ class DigitalCircuitUI {
 				String buildImgName = Character.toString(inputTag) + "image.png";
 				displayGate(newGate, buildImgName);
 				inputTag++;
+				newGate.addJLabel(new JLabel("Active: "));
+				newGate.active.setText(String.valueOf(parentGate.isActive()));
+				Dimension dim = newGate.active.getPreferredSize();
+				newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
+				panel.add(newGate.active);
 			}
 		});
 
@@ -385,10 +390,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Active");
 				((Input) parentGate).setActive(true);
-				JLabel active = new JLabel("Active: ");
-				active.setBounds(parentGate.getX(), parentGate.getY(), 100, 100);
-				active.setText(String.valueOf(parentGate.isActive()));
-				panel.add(active);
+				((Input) parentGate).active.setText(String.valueOf(parentGate.isActive()));
 			}
 
 		});
@@ -398,10 +400,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Inactive");
 				((Input) parentGate).setActive(false);
-				JLabel active = new JLabel("Active: ");
-				active.setBounds(parentGate.getX(), parentGate.getY(), 100, 100);
-				active.setText(String.valueOf(parentGate.isActive()));
-				panel.add(active);
+				((Input) parentGate).active.setText(String.valueOf(parentGate.isActive()));
 			}
 
 		});

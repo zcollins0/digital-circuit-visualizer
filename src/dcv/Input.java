@@ -1,6 +1,7 @@
 package dcv;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 // Class to implement an input. Should not have any children.
 // The value of the input is explicitly set when solving the circuit.
@@ -8,6 +9,8 @@ public class Input extends Gate {
 	
 	// The name of the input (A, B, C...)
 	char tag;
+	private boolean signal;
+	JLabel active;	
 	
 	public Input(char tag) {
 		super(null, null);
@@ -18,7 +21,6 @@ public class Input extends Gate {
 		super(img);
 	}
 	
-	private boolean signal;
 	
 	@Override
 	public boolean isInput(){
@@ -37,6 +39,10 @@ public class Input extends Gate {
 	
 	public void setActive(boolean active) {
 		signal = active;
+	}
+	
+	public void addJLabel(JLabel lab){
+		active = lab;
 	}
 
 }
