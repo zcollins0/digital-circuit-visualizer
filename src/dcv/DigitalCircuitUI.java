@@ -25,23 +25,27 @@ import javax.swing.JPopupMenu;
 
 class DigitalCircuitUI {
 
-	static Circuit circuit;
+	static Circuit circ = new Circuit();
+	static Gate parentGate;
+	
 	static ArrayList<Input> inputList = new ArrayList<Input>();
 	static char inputTag = 'A';
+	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
+	
 	static public JPopupMenu popup;
 	static public JPopupMenu inputMenu;
 	static public JFrame frame;
 	static public JPanel panel;
+	static MouseListener frameListener = null;
+	
 	static boolean drag = false;
 	static int mouseX = 200;
 	static int mouseY = 100;
 	static int clickX = 0;
 	static int clickY = 0;
+	
 	static boolean first = true; 
-	static Circuit circ = new Circuit();
-	static MouseListener frameListener = null;
-	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
-	static Gate parentGate;
+	
 	static void updateUI() {
 		// Call this when you need to redraw
 		for (JLabel l: labels){
@@ -73,12 +77,44 @@ class DigitalCircuitUI {
 		label.setBounds(10, 5, size.width, size.height);
 
 		JButton button = new JButton();
-		button.setText("Evaluate");
+		button.setText("Evaluate All Instances");
+		button.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circ.giveSolver();
+				boolean[] res = circ.solver.solveAll();
+				for(int i=0; i<res.length; i++){
+				System.out.println(res[i]);}
+			}
+			
+		});
 		Dimension bsize = button.getPreferredSize();
-		button.setBounds(480, 5, bsize.width, bsize.height);
+		button.setBounds(5, 30, bsize.width, bsize.height);
+		
+		JButton button2 = new JButton();
+		button2.setText("Evaluate Single Instance");
+		button2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circ.giveSolver();
+				boolean[] states = new boolean[inputList.size()];
+				for(int i = 0; i<inputList.size(); i++){
+					states[i] = inputList.get(i).isActive();
+				}
+				boolean res = circ.solver.solveInstance(states);
+				
+				System.out.println(res);
+			}
+			
+		});
+		Dimension bsize2 = button2.getPreferredSize();
+		button2.setBounds(200, 30, bsize2.width, bsize2.height);
 
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
+		panel.add(button2);
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
@@ -140,10 +176,6 @@ class DigitalCircuitUI {
 		//This function creates a right click menu button for the user to select gate type
 		JMenu submenu = null;
 
-		if(first){
-			circ.setTop(parentGate);
-		}
-
 		//If you've already added a gate, create submenu for child gates
 		popup = new JPopupMenu();
 		if(!first){
@@ -171,6 +203,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "ANDimage.png");
 					first = false;
 				}
@@ -192,6 +225,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "ORimage.png");
 					first = false;
 				}
@@ -214,6 +248,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "NOTimage.png");
 					first = false;
 				}
@@ -235,6 +270,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "NANDimage.png");
 					first = false;
 				}
@@ -256,6 +292,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "NORimage.png");
 					first = false;
 				}
@@ -277,6 +314,7 @@ class DigitalCircuitUI {
 				}
 				else{
 					parentGate = newGate;
+					circ.setTop(parentGate);
 					displayGate(newGate, "XORimage.png");
 					first = false;
 				}

@@ -8,7 +8,7 @@ public class Circuit {
 	// TODO: Allow multiple top level gates
 	Gate top;
 	public Solver solver;
-	public ArrayList<Input> inputs;
+	public ArrayList<Input> inputs = DigitalCircuitUI.inputList;
 	
 	// Return whether top gate is active
 	public boolean isActive() {

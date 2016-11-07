@@ -11,15 +11,24 @@ public class Solver {
 	// Constructor for Solver: takes the owning circuit object
 	Solver(Circuit circuit) {
 		this.circuit = circuit;
-		inputs = circuit.inputs;
+		inputs = DigitalCircuitUI.inputList;
 	}
 
 	// Solve all permutations of inputs
 	public boolean[] solveAll() {
 		// TODO: Multithread this
 		int inputSize = inputs.size();
-		boolean[] results = new boolean[inputSize*inputSize];
+
+		boolean[] results;
 		boolean[] states = new boolean[inputSize];
+		
+		if(inputSize!=1){
+		results = new boolean[inputSize*inputSize];
+		}
+		else {
+			results = new boolean[2];
+		}
+		
 		double numStates = Math.pow(2, (states.length));
 		for (int i = 0; i < numStates; i++) {
 			String binaryString = Integer.toBinaryString(i);
@@ -51,7 +60,7 @@ public class Solver {
 				inputs.get(i).setActive(false);
 			}
 		}
-
+		
 		return circuit.top.isActive();
 	}
 }
