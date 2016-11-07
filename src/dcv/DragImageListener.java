@@ -15,13 +15,7 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		/*if(e.getButton() == MouseEvent.BUTTON3){
-			System.out.println("Call Child Menu");
-			//DigitalCircuitUI.addChildMenu(null);
-			//DigitalCircuitUI.childPopup.show(e.getComponent(), e.getX(), e.getY());
-		}*/
-	}
+	public void mouseClicked(MouseEvent e) {	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {

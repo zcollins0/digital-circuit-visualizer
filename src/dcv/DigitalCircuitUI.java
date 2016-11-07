@@ -76,6 +76,10 @@ class DigitalCircuitUI {
 		Dimension size = label.getPreferredSize();
 		label.setBounds(10, 5, size.width, size.height);
 
+		JLabel resultLabel = new JLabel("Results: ");
+		Dimension rsize = resultLabel.getPreferredSize();
+		resultLabel.setBounds(200, 500, 500, 20);
+		
 		JButton button = new JButton();
 		button.setText("Evaluate All Instances");
 		button.addActionListener(new ActionListener(){
@@ -84,8 +88,15 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent arg0) {
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
+				String sres = "";
 				for(int i=0; i<res.length; i++){
-				System.out.println(res[i]);}
+					System.out.println(res[i]);
+					sres+=String.valueOf(res[i] + ", ");
+				}
+				resultLabel.setText("Results: " + sres);
+				panel.add(resultLabel);
+				frame.add(panel);
+				updateUI();
 			}
 			
 		});
@@ -106,15 +117,21 @@ class DigitalCircuitUI {
 				boolean res = circ.solver.solveInstance(states);
 				
 				System.out.println(res);
+				resultLabel.setText("Results: " + String.valueOf(res));
+				panel.add(resultLabel);
+				frame.add(panel);
+				updateUI();
 			}
 			
 		});
 		Dimension bsize2 = button2.getPreferredSize();
 		button2.setBounds(200, 30, bsize2.width, bsize2.height);
-
+	
+		
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
 		panel.add(button2);
+		panel.add(resultLabel);
 		frame.add(panel);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
@@ -188,8 +205,6 @@ class DigitalCircuitUI {
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO: make parent
-				System.out.println("Clicked AND");
 				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
@@ -213,7 +228,6 @@ class DigitalCircuitUI {
 		JMenuItem or = new JMenuItem("Add OR Gate");
 		or.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked OR");
 				OR newGate = new OR(null, null);
 				if(!first){
 					try {
@@ -235,7 +249,6 @@ class DigitalCircuitUI {
 		JMenuItem not = new JMenuItem("Add NOT Gate");
 		not.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked NOT");
 				Gate tmp = null;
 				NOT newGate = new NOT(tmp);
 				if(!first){
@@ -258,7 +271,6 @@ class DigitalCircuitUI {
 		JMenuItem nand = new JMenuItem("Add NAND Gate");
 		nand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked NAND");
 				NAND newGate = new NAND(null, null);
 				if(!first){
 					try {
@@ -280,7 +292,6 @@ class DigitalCircuitUI {
 		JMenuItem nor = new JMenuItem("Add NOR Gate");
 		nor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked NOR");
 				NOR newGate = new NOR(null, null);
 				if(!first){
 					try {
@@ -302,7 +313,6 @@ class DigitalCircuitUI {
 		JMenuItem xor = new JMenuItem("Add XOR Gate");
 		xor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked XOR");
 				XOR newGate = new XOR(null, null);
 				if(!first){
 					try {
@@ -324,9 +334,9 @@ class DigitalCircuitUI {
 		JMenuItem inp = new JMenuItem("Add Input");
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Clicked Add Input");
 				Input newGate = new Input(inputTag);
 				inputList.add(newGate);
+				
 				try {
 					parentGate.addChildGate(newGate);
 
@@ -375,6 +385,10 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Active");
 				((Input) parentGate).setActive(true);
+				JLabel active = new JLabel("Active: ");
+				active.setBounds(parentGate.getX(), parentGate.getY(), 100, 100);
+				active.setText(String.valueOf(parentGate.isActive()));
+				panel.add(active);
 			}
 
 		});
@@ -384,6 +398,10 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Inactive");
 				((Input) parentGate).setActive(false);
+				JLabel active = new JLabel("Active: ");
+				active.setBounds(parentGate.getX(), parentGate.getY(), 100, 100);
+				active.setText(String.valueOf(parentGate.isActive()));
+				panel.add(active);
 			}
 
 		});
