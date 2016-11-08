@@ -78,7 +78,7 @@ class DigitalCircuitUI {
 
 		JLabel resultLabel = new JLabel("Results: ");
 		Dimension rsize = resultLabel.getPreferredSize();
-		resultLabel.setBounds(200, 500, 500, 20);
+		resultLabel.setBounds(200, 500, 1000, 20);
 		
 		JButton button = new JButton();
 		button.setText("Evaluate All Instances");
@@ -348,7 +348,7 @@ class DigitalCircuitUI {
 				displayGate(newGate, buildImgName);
 				inputTag++;
 				newGate.addJLabel(new JLabel("Active: "));
-				newGate.active.setText(String.valueOf(parentGate.isActive()));
+				newGate.active.setText("False");
 				Dimension dim = newGate.active.getPreferredSize();
 				newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
 				panel.add(newGate.active);
