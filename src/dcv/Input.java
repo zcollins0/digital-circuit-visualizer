@@ -28,7 +28,7 @@ public class Input extends Gate {
 	}
 	
 	@Override
-	public boolean isActive() {
+	public Boolean isActive() {
 		return signal;
 	}
 	

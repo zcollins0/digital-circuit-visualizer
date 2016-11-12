@@ -20,8 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 
 class DigitalCircuitUI {
 
@@ -96,7 +98,6 @@ class DigitalCircuitUI {
 				resultLabel.setText("Results: " + sres);
 				panel.add(resultLabel);
 				frame.add(panel);
-				updateUI();
 			}
 			
 		});
@@ -110,17 +111,22 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circ.giveSolver();
-				boolean[] states = new boolean[inputList.size()];
+				Boolean[] states = new Boolean[inputList.size()];
 				for(int i = 0; i<inputList.size(); i++){
 					states[i] = inputList.get(i).isActive();
 				}
 				boolean res = circ.solver.solveInstance(states);
-				
-				System.out.println(res);
-				resultLabel.setText("Results: " + String.valueOf(res));
-				panel.add(resultLabel);
-				frame.add(panel);
-				updateUI();
+				String[] cols = {"Input", "Active", "Result"};
+				Object[][] data; 
+				String[] tags = null;
+				Boolean[] bools = null;
+				for(int i=0; i<inputList.size();i++){
+					tags[i] = String.valueOf(inputList.get(i).tag);
+					bools[i] =  inputList.get(i).isActive();
+				}
+				data = new Object[][]{tags, bools, res}
+				JTable table = new JTable(data, cols);
+				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
 			}
 			
 		});
@@ -205,6 +211,9 @@ class DigitalCircuitUI {
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
 				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
@@ -212,6 +221,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "ANDimage.png");
+						parentGate.addConnector(parentGate, newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
@@ -379,7 +389,6 @@ class DigitalCircuitUI {
 
 		//remove frame listener so it's only possible to add child gates after first gate
 		frame.removeMouseListener(frameListener);
-		updateUI();
 	}
 
 	public static void addInputMenu() {

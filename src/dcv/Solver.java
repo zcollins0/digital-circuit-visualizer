@@ -20,7 +20,7 @@ public class Solver {
 		int inputSize = inputs.size();
 
 		boolean[] results;
-		boolean[] states = new boolean[inputSize];
+		Boolean[] states = new Boolean[inputSize];
 		
 		if(inputSize!=1){
 		results = new boolean[inputSize*inputSize];
@@ -48,7 +48,7 @@ public class Solver {
 	// Solve one specific instance of the circuit
 	// If the array of booleans is longer than the array of inputs, the remaining booleans are ignored
 	// If the array of booleans is shorter, the remaining inputs are set to false
-	boolean solveInstance(boolean[] states) {
+	boolean solveInstance(Boolean[] states) {
 		int i;
 		for (i = 0; i < states.length; i++) {
 			if (i == inputs.size())
