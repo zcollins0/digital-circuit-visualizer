@@ -14,7 +14,7 @@ public class XOR extends Gate {
 	}
 
 	@Override
-	public boolean isActive() {
+	public Boolean isActive() {
 		return (child1.isActive() != child2.isActive());
 	}
 

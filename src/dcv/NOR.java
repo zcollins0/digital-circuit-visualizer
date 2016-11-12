@@ -14,7 +14,7 @@ public class NOR extends OR {
 	}
 
 	@Override
-	public boolean isActive() {
+	public Boolean isActive() {
 		return !(super.isActive());
 	}
 }

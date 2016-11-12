@@ -112,19 +112,18 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent arg0) {
 				circ.giveSolver();
 				Boolean[] states = new Boolean[inputList.size()];
-				for(int i = 0; i<inputList.size(); i++){
-					states[i] = inputList.get(i).isActive();
-				}
-				boolean res = circ.solver.solveInstance(states);
 				String[] cols = {"Input", "Active", "Result"};
 				Object[][] data; 
 				String[] tags = null;
 				Boolean[] bools = null;
-				for(int i=0; i<inputList.size();i++){
+				System.out.println(inputList);
+				for(int i = 0; i<inputList.size(); i++){
+					states[i] = inputList.get(i).isActive();
 					tags[i] = String.valueOf(inputList.get(i).tag);
 					bools[i] =  inputList.get(i).isActive();
 				}
-				data = new Object[][]{tags, bools, res}
+				Boolean res = circ.solver.solveInstance(states);
+				data = new Object[][]{tags, bools};
 				JTable table = new JTable(data, cols);
 				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
 			}

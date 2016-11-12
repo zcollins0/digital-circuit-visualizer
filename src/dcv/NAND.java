@@ -14,7 +14,7 @@ public class NAND extends AND {
 	}
 
 	@Override
-	public boolean isActive() {
+	public Boolean isActive() {
 		return !(super.isActive());
 	}
 }

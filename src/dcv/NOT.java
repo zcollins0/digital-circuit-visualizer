@@ -14,7 +14,7 @@ public class NOT extends Gate {
 	}
 
 	@Override
-	public boolean isActive() {
+	public Boolean isActive() {
 		return (child1 != null) ? !child1.isActive() : !child2.isActive();
 	}
 	
