@@ -42,6 +42,8 @@ class DigitalCircuitUI {
 	static public JPopupMenu inputMenu;
 	static public JFrame frame;
 	static public JPanel panel;
+	static public JTable table = null;
+	static public JScrollPane scrollPane;
 	static MouseListener frameListener = null;
 	
 	static boolean drag = false;
@@ -92,6 +94,10 @@ class DigitalCircuitUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(table!=null){
+					panel.remove(scrollPane);
+				}
+				
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
 				
@@ -120,11 +126,13 @@ class DigitalCircuitUI {
 				
 				cols[inputList.size()] = "Result";
 				
-				JTable table = new JTable(data, cols);
-				JScrollPane scrollPane = new JScrollPane(table);
+				table = new JTable(data, cols);
+				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
 				panel.add(scrollPane);
+				panel.revalidate();
+				panel.repaint();
 			}
 			
 		});
@@ -138,6 +146,9 @@ class DigitalCircuitUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(table!=null){
+					panel.remove(scrollPane);
+				}
 				circ.giveSolver();
 							
 				Boolean[] states = new Boolean[inputList.size()];
@@ -152,13 +163,15 @@ class DigitalCircuitUI {
 				cols[inputList.size()] = "Result";
 				Boolean res = circ.solver.solveInstance(states);
 				
-				JTable table = new JTable(data, cols);
-				JScrollPane scrollPane = new JScrollPane(table);
+				table = new JTable(data, cols);
+				table.setValueAt(res, 0, 2);
+				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
-				panel.add(scrollPane);
 				
-				table.setValueAt(res, 0, 2);
+				panel.add(scrollPane);
+				panel.revalidate();
+				panel.repaint();
 				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
 			}
 			
@@ -172,7 +185,7 @@ class DigitalCircuitUI {
 		panel.add(button2);
 		panel.add(resultLabel);
 		frame.add(panel);
-		frame.setSize(600, 600);
+		frame.setSize(800, 800);
 		frame.setLocationRelativeTo(null);
 
 		//create listener for right click popup menu
@@ -392,7 +405,7 @@ class DigitalCircuitUI {
 				inputTag++;
 				//System.out.println(inputTag);
 				newGate.addJLabel(new JLabel("Active: "));
-				newGate.active.setText("False");
+				newGate.active.setText(String.valueOf(newGate.isActive()));
 				Dimension dim = newGate.active.getPreferredSize();
 				newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
 				panel.add(newGate.active);
