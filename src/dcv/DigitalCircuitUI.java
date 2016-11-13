@@ -94,14 +94,37 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent arg0) {
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
-				String sres = "";
-				for(int i=0; i<res.length; i++){
-					System.out.println(res[i]);
-					sres+=String.valueOf(res[i] + ", ");
+				
+				Boolean[] states = new Boolean[inputList.size()];
+				String[] cols = new String[inputList.size()+1];
+				Object[][] data = new Object[(int) Math.pow(2, (double)inputList.size())][inputList.size()+1];
+				
+				for(int i = 0; i<inputList.size(); i++){
+					cols[i] = String.valueOf(inputList.get(i).tag);
 				}
-				resultLabel.setText("Results: " + sres);
-				panel.add(resultLabel);
-				frame.add(panel);
+				
+				for(int i = 0; i<Math.pow(2, (double)inputList.size()); i++){
+					for(int j=0; j<inputList.size(); j++){
+						String binaryString = Integer.toBinaryString(i);
+						while (binaryString.length() != inputList.size()) {
+							binaryString = "0" + binaryString;
+						}
+						char[] binaryChars = binaryString.toCharArray();
+						for (int k = 0; k < binaryChars.length; k++) {
+							states[k] = (binaryChars[j] == '1');
+							data[i][j] = states[k];
+						}
+					}
+					data[i][inputList.size()] = res[i];
+				}
+				
+				cols[inputList.size()] = "Result";
+				
+				JTable table = new JTable(data, cols);
+				JScrollPane scrollPane = new JScrollPane(table);
+				Dimension tablesize = table.getPreferredSize();
+				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
+				panel.add(scrollPane);
 			}
 			
 		});
@@ -134,11 +157,9 @@ class DigitalCircuitUI {
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
 				panel.add(scrollPane);
-				frame.add(panel);
 				
 				table.setValueAt(res, 0, 2);
 				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
-				panel.add(scrollPane);
 			}
 			
 		});

@@ -21,14 +21,14 @@ public class Solver {
 
 		boolean[] results;
 		Boolean[] states = new Boolean[inputSize];
-		
+
 		if(inputSize!=1){
-		results = new boolean[inputSize*inputSize];
+			results = new boolean[inputSize*inputSize];
 		}
 		else {
 			results = new boolean[2];
 		}
-		
+
 		double numStates = Math.pow(2, (states.length));
 		for (int i = 0; i < numStates; i++) {
 			String binaryString = Integer.toBinaryString(i);
@@ -41,7 +41,7 @@ public class Solver {
 			}
 			results[i] = solveInstance(states);
 		}
-		
+
 		return results;
 	}
 
@@ -60,7 +60,7 @@ public class Solver {
 				inputs.get(i).setActive(false);
 			}
 		}
-		
+
 		return circuit.top.isActive();
 	}
 }
