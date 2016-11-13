@@ -54,7 +54,7 @@ public abstract class Gate extends JLabel{
 	}
 	
 	public void addConnector(Gate parent, Gate child){
-		int startx = parent.getLocation().x;
+	/*	int startx = parent.getLocation().x;
 		int starty = parent.getLocation().y;
 		double offset = parent.getHeight()/3;
 		FileInputStream istream = null;
@@ -72,9 +72,9 @@ public abstract class Gate extends JLabel{
 			System.exit(0);
 		} 
 
-		/*Graphics2D g = (Graphics2D) image.getGraphics();
+		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.rotate(Math.toRadians(90), 0,0);
-		g.drawImage(image, 0, 0, null);*/
+		g.drawImage(image, 0, 0, null);
 		Image temp = image.getScaledInstance(10, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(temp);
 		
@@ -83,7 +83,7 @@ public abstract class Gate extends JLabel{
 		label1.setIcon(icon);
 		label1.setBounds(startx-5, starty-40, 10, 50);
 		DigitalCircuitUI.labels.add(label1);
-		DigitalCircuitUI.updateUI();
+		DigitalCircuitUI.updateUI();*/
 	}
 
 	
