@@ -425,6 +425,25 @@ class DigitalCircuitUI {
 			}
 		});
 
+		JMenuItem removeGate = new JMenuItem("Remove Item");
+		removeGate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentGate.removeGate();
+				System.out.println(parentGate);
+				System.out.println(parentGate.pGate);
+				if(parentGate.pGate!=null){
+					System.out.println("?");
+					parentGate.pGate.child1 = null;
+					parentGate.pGate.child2 = null;
+				}
+				if(gateList.isEmpty()){
+					first = true;
+					frameListener = new PopupListener();
+					frame.addMouseListener(frameListener);
+				}
+			}
+		});
+
 
 		//add menu items to the popup menu if first gate
 		if(first){
@@ -443,10 +462,10 @@ class DigitalCircuitUI {
 			submenu.add(nand);
 			submenu.add(nor);
 			submenu.add(xor);
-			submenu.add(inp);
 			popup.add(submenu);
+			popup.add(inp);
+			popup.add(removeGate);
 		}
-
 		//remove frame listener so it's only possible to add child gates after first gate
 		frame.removeMouseListener(frameListener);
 	}
