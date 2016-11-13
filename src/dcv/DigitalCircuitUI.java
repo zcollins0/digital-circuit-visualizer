@@ -23,7 +23,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 class DigitalCircuitUI {
 
@@ -104,6 +108,7 @@ class DigitalCircuitUI {
 		Dimension bsize = button.getPreferredSize();
 		button.setBounds(5, 30, bsize.width, bsize.height);
 		
+		
 		JButton button2 = new JButton();
 		button2.setText("Evaluate Single Instance");
 		button2.addActionListener(new ActionListener(){
@@ -111,21 +116,29 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circ.giveSolver();
+							
 				Boolean[] states = new Boolean[inputList.size()];
-				String[] cols = {"Input", "Active", "Result"};
-				Object[][] data; 
-				String[] tags = null;
-				Boolean[] bools = null;
-				System.out.println(inputList);
+				String[] cols = new String[inputList.size()+1];
+				Object[][] data = new Object[1][inputList.size()+1];
 				for(int i = 0; i<inputList.size(); i++){
 					states[i] = inputList.get(i).isActive();
-					tags[i] = String.valueOf(inputList.get(i).tag);
-					bools[i] =  inputList.get(i).isActive();
+					cols[i] = String.valueOf(inputList.get(i).tag);
+					data[0][i] = inputList.get(i).isActive();
 				}
+				
+				cols[inputList.size()] = "Result";
 				Boolean res = circ.solver.solveInstance(states);
-				data = new Object[][]{tags, bools};
+				
 				JTable table = new JTable(data, cols);
+				JScrollPane scrollPane = new JScrollPane(table);
+				Dimension tablesize = table.getPreferredSize();
+				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
+				panel.add(scrollPane);
+				frame.add(panel);
+				
+				table.setValueAt(res, 0, 2);
 				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
+				panel.add(scrollPane);
 			}
 			
 		});
@@ -356,6 +369,7 @@ class DigitalCircuitUI {
 				String buildImgName = Character.toString(inputTag) + "image.png";
 				displayGate(newGate, buildImgName);
 				inputTag++;
+				//System.out.println(inputTag);
 				newGate.addJLabel(new JLabel("Active: "));
 				newGate.active.setText("False");
 				Dimension dim = newGate.active.getPreferredSize();
