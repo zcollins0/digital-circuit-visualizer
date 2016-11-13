@@ -129,7 +129,7 @@ class DigitalCircuitUI {
 				table = new JTable(data, cols);
 				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
-				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
+				scrollPane.setBounds(280, 500, tablesize.width, 150);
 				panel.add(scrollPane);
 				panel.revalidate();
 				panel.repaint();

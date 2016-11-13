@@ -23,7 +23,7 @@ public class Solver {
 		Boolean[] states = new Boolean[inputSize];
 
 		if(inputSize!=1){
-			results = new boolean[inputSize*inputSize];
+			results = new boolean[(int) Math.pow(2, (states.length))];
 		}
 		else {
 			results = new boolean[2];
