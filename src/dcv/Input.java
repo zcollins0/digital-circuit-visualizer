@@ -44,5 +44,9 @@ public class Input extends Gate {
 	public void addJLabel(JLabel lab){
 		active = lab;
 	}
+	
+	public JLabel getLabel(){
+		return active;
+	}
 
 }

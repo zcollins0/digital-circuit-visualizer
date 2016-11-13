@@ -25,19 +25,17 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 class DigitalCircuitUI {
 
 	static Circuit circ = new Circuit();
 	static Gate parentGate;
-	
+
 	static ArrayList<Input> inputList = new ArrayList<Input>();
 	static char inputTag = 'A';
 	static ArrayList<JLabel> labels = new ArrayList<JLabel>();
-	
+	static ArrayList<Gate> gateList = new ArrayList<Gate>();
+
 	static public JPopupMenu popup;
 	static public JPopupMenu inputMenu;
 	static public JFrame frame;
@@ -45,15 +43,15 @@ class DigitalCircuitUI {
 	static public JTable table = null;
 	static public JScrollPane scrollPane;
 	static MouseListener frameListener = null;
-	
+
 	static boolean drag = false;
 	static int mouseX = 200;
 	static int mouseY = 100;
 	static int clickX = 0;
 	static int clickY = 0;
-	
+
 	static boolean first = true; 
-	
+
 	static void updateUI() {
 		// Call this when you need to redraw
 		for (JLabel l: labels){
@@ -86,8 +84,8 @@ class DigitalCircuitUI {
 
 		JLabel resultLabel = new JLabel("Results: ");
 		Dimension rsize = resultLabel.getPreferredSize();
-		resultLabel.setBounds(200, 500, 1000, 20);
-		
+		resultLabel.setBounds(200, 500, rsize.width, rsize.height);
+
 		JButton button = new JButton();
 		button.setText("Evaluate All Instances");
 		button.addActionListener(new ActionListener(){
@@ -97,18 +95,18 @@ class DigitalCircuitUI {
 				if(table!=null){
 					panel.remove(scrollPane);
 				}
-				
+
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
-				
+
 				Boolean[] states = new Boolean[inputList.size()];
 				String[] cols = new String[inputList.size()+1];
 				Object[][] data = new Object[(int) Math.pow(2, (double)inputList.size())][inputList.size()+1];
-				
+
 				for(int i = 0; i<inputList.size(); i++){
 					cols[i] = String.valueOf(inputList.get(i).tag);
 				}
-				
+
 				for(int i = 0; i<Math.pow(2, (double)inputList.size()); i++){
 					for(int j=0; j<inputList.size(); j++){
 						String binaryString = Integer.toBinaryString(i);
@@ -123,23 +121,31 @@ class DigitalCircuitUI {
 					}
 					data[i][inputList.size()] = res[i];
 				}
-				
+
 				cols[inputList.size()] = "Result";
-				
+
 				table = new JTable(data, cols);
 				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, 150);
 				panel.add(scrollPane);
+
+				for(int i=0;i<gateList.size();i++){
+					if(gateList.get(i).getLabel()!=null){
+						gateList.get(i).getLabel().setText(String.valueOf(gateList.get(i).isActive()));
+					}
+				}
+
 				panel.revalidate();
 				panel.repaint();
+
 			}
-			
+
 		});
 		Dimension bsize = button.getPreferredSize();
 		button.setBounds(5, 30, bsize.width, bsize.height);
-		
-		
+
+
 		JButton button2 = new JButton();
 		button2.setText("Evaluate Single Instance");
 		button2.addActionListener(new ActionListener(){
@@ -150,7 +156,7 @@ class DigitalCircuitUI {
 					panel.remove(scrollPane);
 				}
 				circ.giveSolver();
-							
+
 				Boolean[] states = new Boolean[inputList.size()];
 				String[] cols = new String[inputList.size()+1];
 				Object[][] data = new Object[1][inputList.size()+1];
@@ -159,27 +165,26 @@ class DigitalCircuitUI {
 					cols[i] = String.valueOf(inputList.get(i).tag);
 					data[0][i] = inputList.get(i).isActive();
 				}
-				
+
 				cols[inputList.size()] = "Result";
 				Boolean res = circ.solver.solveInstance(states);
-				
+
 				table = new JTable(data, cols);
-				table.setValueAt(res, 0, 2);
+				table.setValueAt(res, 0, inputList.size());
 				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
-				
+
 				panel.add(scrollPane);
 				panel.revalidate();
-				panel.repaint();
-				JOptionPane.showMessageDialog(frame, "This circuit evaluates to " + res);
+				panel.repaint();	
 			}
-			
+
 		});
 		Dimension bsize2 = button2.getPreferredSize();
 		button2.setBounds(200, 30, bsize2.width, bsize2.height);
-	
-		
+
+
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
 		panel.add(button2);
@@ -222,7 +227,7 @@ class DigitalCircuitUI {
 		ImageIcon icon = new ImageIcon(temp);
 
 		label1.setIcon(icon);
-		
+
 		Dimension lsize = label1.getPreferredSize();
 		//Listener to allow image to be dragged
 		label1.addMouseMotionListener(new DragImageListener(){});
@@ -257,9 +262,9 @@ class DigitalCircuitUI {
 		//if Add AND Gate is clicked, call displayGate with ANDimage.png
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+
+
+
 				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
@@ -278,6 +283,8 @@ class DigitalCircuitUI {
 					displayGate(newGate, "ANDimage.png");
 					first = false;
 				}
+
+				gateList.add(newGate);
 			}
 		});
 
@@ -299,6 +306,7 @@ class DigitalCircuitUI {
 					displayGate(newGate, "ORimage.png");
 					first = false;
 				}
+				gateList.add(newGate);
 			}
 		});
 
@@ -321,6 +329,7 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NOTimage.png");
 					first = false;
 				}
+				gateList.add(newGate);
 			}
 		});
 
@@ -342,6 +351,7 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NANDimage.png");
 					first = false;
 				}
+				gateList.add(newGate);
 			}
 		});
 
@@ -363,6 +373,7 @@ class DigitalCircuitUI {
 					displayGate(newGate, "NORimage.png");
 					first = false;
 				}
+				gateList.add(newGate);
 			}
 		});
 
@@ -384,6 +395,7 @@ class DigitalCircuitUI {
 					displayGate(newGate, "XORimage.png");
 					first = false;
 				}
+				gateList.add(newGate);
 			}
 		});
 
@@ -392,7 +404,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				Input newGate = new Input(inputTag);
 				inputList.add(newGate);
-				
+
 				try {
 					parentGate.addChildGate(newGate);
 
@@ -409,6 +421,7 @@ class DigitalCircuitUI {
 				Dimension dim = newGate.active.getPreferredSize();
 				newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
 				panel.add(newGate.active);
+				gateList.add(newGate);
 			}
 		});
 

@@ -1,6 +1,7 @@
 package dcv;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 // 1-input inverter. Should only have one child.
 public class NOT extends Gate {
@@ -27,5 +28,10 @@ public class NOT extends Gate {
 			// Note: never allow NOt gate to have bottom child
 			child1 = g;
 		}
+	}
+
+	@Override
+	public JLabel getLabel() {
+		return null;
 	}
 }

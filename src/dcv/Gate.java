@@ -89,4 +89,5 @@ public abstract class Gate extends JLabel{
 	
 	// Returns whether the gate is active based on its inputs
 	public abstract Boolean isActive();
+	public abstract JLabel getLabel();
 }
