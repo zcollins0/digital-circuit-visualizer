@@ -127,7 +127,12 @@ class DigitalCircuitUI {
 				table = new JTable(data, cols);
 				scrollPane = new JScrollPane(table);
 				Dimension tablesize = table.getPreferredSize();
-				scrollPane.setBounds(280, 500, tablesize.width, 150);
+				if (tablesize.height < 150){
+					scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
+				}
+				else{
+					scrollPane.setBounds(280, 500, tablesize.width, 150);
+				}
 				panel.add(scrollPane);
 
 				for(int i=0;i<gateList.size();i++){
@@ -428,14 +433,16 @@ class DigitalCircuitUI {
 		JMenuItem removeGate = new JMenuItem("Remove Item");
 		removeGate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parentGate.removeGate();
+			/*	System.out.print("clicked gate: ");
 				System.out.println(parentGate);
-				System.out.println(parentGate.pGate);
-				if(parentGate.pGate!=null){
-					System.out.println("?");
+				System.out.print("parent of clicked gate: ");
+				System.out.println(parentGate.pGate);*/
+				parentGate.removeGate();
+			/*	if(parentGate.pGate!=null){
 					parentGate.pGate.child1 = null;
 					parentGate.pGate.child2 = null;
-				}
+				}*/
+				
 				if(gateList.isEmpty()){
 					first = true;
 					frameListener = new PopupListener();

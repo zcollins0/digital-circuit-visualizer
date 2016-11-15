@@ -46,10 +46,14 @@ public abstract class Gate extends JLabel{
 		if (child1 == null) {
 			child1 = g;
 			pGate = this;
+			//System.out.print("parent gate: ");
+			//System.out.println(pGate);
 		}
 		else if(child2 == null) {
 			child2 = g; 
 			pGate = this;
+			//System.out.print("parent gate: ");
+			//System.out.println(pGate);
 			//System.out.println("Child 1 position is occupied.Putting in child 2 position");
 		}
 		else {
@@ -77,11 +81,12 @@ public abstract class Gate extends JLabel{
 				parent.remove(((Input)this).active);
 				DigitalCircuitUI.inputTag--;
 			}
-
 			parent.remove(this);
 			parent.revalidate();
 			parent.repaint();
 		}
+		//System.out.println(pGate);
+		pGate = null;
 	}
 
 	public void addConnector(Gate parent, Gate child){
