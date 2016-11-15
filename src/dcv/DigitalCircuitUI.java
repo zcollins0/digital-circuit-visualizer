@@ -86,12 +86,14 @@ class DigitalCircuitUI {
 		Dimension rsize = resultLabel.getPreferredSize();
 		resultLabel.setBounds(200, 500, rsize.width, rsize.height);
 
+		//Create Evaluate All Instances button and give it an action listener
 		JButton button = new JButton();
 		button.setText("Evaluate All Instances");
 		button.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//delete the previous table
 				if(table!=null){
 					panel.remove(scrollPane);
 				}
@@ -99,6 +101,8 @@ class DigitalCircuitUI {
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
 
+				//All this is just to build the table 
+				//TODO: Should probably go back through and use Zach's code in Solver for this instead of rewriting it
 				Boolean[] states = new Boolean[inputList.size()];
 				String[] cols = new String[inputList.size()+1];
 				Object[][] data = new Object[(int) Math.pow(2, (double)inputList.size())][inputList.size()+1];
@@ -126,6 +130,8 @@ class DigitalCircuitUI {
 
 				table = new JTable(data, cols);
 				scrollPane = new JScrollPane(table);
+				
+				//Format the table and add it to the panel
 				Dimension tablesize = table.getPreferredSize();
 				if (tablesize.height < 150){
 					scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
@@ -134,10 +140,11 @@ class DigitalCircuitUI {
 					scrollPane.setBounds(280, 500, tablesize.width, 150);
 				}
 				panel.add(scrollPane);
-
-				for(int i=0;i<gateList.size();i++){
-					if(gateList.get(i).getLabel()!=null){
-						gateList.get(i).getLabel().setText(String.valueOf(gateList.get(i).isActive()));
+				
+				//Solver changes whether gates are active or not, so this updates the labels to match
+				for(int i=0;i<inputList.size();i++){
+					if(inputList.get(i).getLabel()!=null){
+						inputList.get(i).getLabel().setText(String.valueOf(inputList.get(i).isActive()));
 					}
 				}
 
@@ -147,21 +154,24 @@ class DigitalCircuitUI {
 			}
 
 		});
+		
 		Dimension bsize = button.getPreferredSize();
 		button.setBounds(5, 30, bsize.width, bsize.height);
 
-
+		//Create button to Evaluate single instance and give it an action listener
 		JButton button2 = new JButton();
 		button2.setText("Evaluate Single Instance");
 		button2.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//delete the old table
 				if(table!=null){
 					panel.remove(scrollPane);
 				}
 				circ.giveSolver();
 
+				//build table
 				Boolean[] states = new Boolean[inputList.size()];
 				String[] cols = new String[inputList.size()+1];
 				Object[][] data = new Object[1][inputList.size()+1];
@@ -174,6 +184,7 @@ class DigitalCircuitUI {
 				cols[inputList.size()] = "Result";
 				Boolean res = circ.solver.solveInstance(states);
 
+				//format table
 				table = new JTable(data, cols);
 				table.setValueAt(res, 0, inputList.size());
 				scrollPane = new JScrollPane(table);
@@ -189,7 +200,7 @@ class DigitalCircuitUI {
 		Dimension bsize2 = button2.getPreferredSize();
 		button2.setBounds(200, 30, bsize2.width, bsize2.height);
 
-
+		//Add all the elements to the UI
 		panel.add(label);
 		panel.add(button, BorderLayout.PAGE_END);
 		panel.add(button2);
@@ -404,6 +415,7 @@ class DigitalCircuitUI {
 			}
 		});
 
+		//To add an input
 		JMenuItem inp = new JMenuItem("Add Input");
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -411,16 +423,23 @@ class DigitalCircuitUI {
 				
 				try {
 					parentGate.addChildGate(newGate);
+					
+					//build the filename using the input tag
 					String buildImgName = Character.toString(inputTag) + "image.png";
 					displayGate(newGate, buildImgName);
+					
+					//Add to inputList and increment the input tag
 					inputList.add(newGate);
 					inputTag++;
-					//System.out.println(inputTag);
+					
+					//Create a new label to display whether the input is active or not
 					newGate.addJLabel(new JLabel("Active: "));
-					newGate.active.setText(String.valueOf(newGate.isActive()));
-					Dimension dim = newGate.active.getPreferredSize();
-					newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
-					panel.add(newGate.active);
+					newGate.activeLabel.setText(String.valueOf(newGate.isActive()));
+					
+					//formatting
+					Dimension dim = newGate.activeLabel.getPreferredSize();
+					newGate.activeLabel.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
+					panel.add(newGate.activeLabel);
 					gateList.add(newGate);
 
 				} catch (InvalidNodeException e1) {
@@ -429,12 +448,14 @@ class DigitalCircuitUI {
 			}
 		});
 
+		//Remove a gate
 		JMenuItem removeGate = new JMenuItem("Remove Item");
 		removeGate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				parentGate.removeGate();
 				
+				//If removing the top level gate, re-enable the frame listener and allow for a new top level gate to be created
 				if(gateList.isEmpty()){
 					first = true;
 					frameListener = new PopupListener();
@@ -465,10 +486,12 @@ class DigitalCircuitUI {
 			popup.add(inp);
 			popup.add(removeGate);
 		}
+		
 		//remove frame listener so it's only possible to add child gates after first gate
 		frame.removeMouseListener(frameListener);
 	}
 
+	//Right click options for inputs
 	public static void addInputMenu() {
 		inputMenu = new JPopupMenu();
 
@@ -477,7 +500,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Active");
 				((Input) parentGate).setActive(true);
-				((Input) parentGate).active.setText(String.valueOf(parentGate.isActive()));
+				((Input) parentGate).activeLabel.setText(String.valueOf(parentGate.isActive()));
 			}
 
 		});
@@ -487,7 +510,7 @@ class DigitalCircuitUI {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Clicked Make Inactive");
 				((Input) parentGate).setActive(false);
-				((Input) parentGate).active.setText(String.valueOf(parentGate.isActive()));
+				((Input) parentGate).activeLabel.setText(String.valueOf(parentGate.isActive()));
 			}
 
 		});

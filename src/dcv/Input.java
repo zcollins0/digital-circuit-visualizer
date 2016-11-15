@@ -10,7 +10,7 @@ public class Input extends Gate {
 	// The name of the input (A, B, C...)
 	char tag;
 	private boolean signal;
-	JLabel active;	
+	JLabel activeLabel;	
 	
 	public Input(char tag) {
 		super(null, null);
@@ -42,11 +42,11 @@ public class Input extends Gate {
 	}
 	
 	public void addJLabel(JLabel lab){
-		active = lab;
+		activeLabel = lab;
 	}
 	
 	public JLabel getLabel(){
-		return active;
+		return activeLabel;
 	}
 
 }

@@ -46,14 +46,10 @@ public abstract class Gate extends JLabel{
 		if (child1 == null) {
 			child1 = g;
 			child1.pGate = this;
-			//System.out.print("parent gate: ");
-			//System.out.println(pGate);
 		}
 		else if(child2 == null) {
 			child2 = g; 
 			child2.pGate = this;
-			//System.out.print("parent gate: ");
-			//System.out.println(pGate);
 			//System.out.println("Child 1 position is occupied.Putting in child 2 position");
 		}
 		else {
@@ -61,7 +57,10 @@ public abstract class Gate extends JLabel{
 		}
 	}
 
+	//function to remove a gate and all it's child gates
 	public void removeGate(){
+		
+		//remove the child gates and set them to null
 		while(this.child1!=null){
 			this.child1.removeGate();
 			this.child1 = null;
@@ -72,28 +71,35 @@ public abstract class Gate extends JLabel{
 			this.child2 = null;
 		}
 
+		//remove the gate from gateList and remove the JLabels
 		DigitalCircuitUI.gateList.remove(this);
 		DigitalCircuitUI.labels.remove(this);
+		
+		//if gate is an input, remove it from input list
 		if(this.isInput()){
 			DigitalCircuitUI.inputList.remove(this);
 		}
+		
+		//remove the activeLabel for inputs
 		Container parent = this.getParent();
 		if(parent != null){
 			if(this.isInput()){
-				parent.remove(((Input)this).active);
+				parent.remove(((Input)this).activeLabel);
 				//DigitalCircuitUI.inputTag--;
 			}
 			parent.remove(this);
 			parent.revalidate();
 			parent.repaint();
 		}
+		
+		//set the parent gate's child/children to null
 		if(this.pGate.child1 == this){
 			this.pGate.child1 = null;
 		}
+		
 		if(this.pGate.child2 == this){
 			this.pGate.child2 = null;
 		}
-		//System.out.println(pGate);
 	}
 
 	public void addConnector(Gate parent, Gate child){
