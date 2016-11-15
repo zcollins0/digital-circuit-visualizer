@@ -45,13 +45,13 @@ public abstract class Gate extends JLabel{
 	public void addChildGate(Gate g) throws InvalidNodeException {
 		if (child1 == null) {
 			child1 = g;
-			pGate = this;
+			child1.pGate = this;
 			//System.out.print("parent gate: ");
 			//System.out.println(pGate);
 		}
 		else if(child2 == null) {
 			child2 = g; 
-			pGate = this;
+			child2.pGate = this;
 			//System.out.print("parent gate: ");
 			//System.out.println(pGate);
 			//System.out.println("Child 1 position is occupied.Putting in child 2 position");
@@ -74,19 +74,26 @@ public abstract class Gate extends JLabel{
 
 		DigitalCircuitUI.gateList.remove(this);
 		DigitalCircuitUI.labels.remove(this);
-		DigitalCircuitUI.inputList.remove(this);
+		if(this.isInput()){
+			DigitalCircuitUI.inputList.remove(this);
+		}
 		Container parent = this.getParent();
 		if(parent != null){
 			if(this.isInput()){
 				parent.remove(((Input)this).active);
-				DigitalCircuitUI.inputTag--;
+				//DigitalCircuitUI.inputTag--;
 			}
 			parent.remove(this);
 			parent.revalidate();
 			parent.repaint();
 		}
+		if(this.pGate.child1 == this){
+			this.pGate.child1 = null;
+		}
+		if(this.pGate.child2 == this){
+			this.pGate.child2 = null;
+		}
 		//System.out.println(pGate);
-		pGate = null;
 	}
 
 	public void addConnector(Gate parent, Gate child){

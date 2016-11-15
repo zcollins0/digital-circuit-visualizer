@@ -408,40 +408,32 @@ class DigitalCircuitUI {
 		inp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Input newGate = new Input(inputTag);
-				inputList.add(newGate);
-
+				
 				try {
 					parentGate.addChildGate(newGate);
+					String buildImgName = Character.toString(inputTag) + "image.png";
+					displayGate(newGate, buildImgName);
+					inputList.add(newGate);
+					inputTag++;
+					//System.out.println(inputTag);
+					newGate.addJLabel(new JLabel("Active: "));
+					newGate.active.setText(String.valueOf(newGate.isActive()));
+					Dimension dim = newGate.active.getPreferredSize();
+					newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
+					panel.add(newGate.active);
+					gateList.add(newGate);
 
 				} catch (InvalidNodeException e1) {
 					System.out.println("Input cannot have children");
 				}
-
-				String buildImgName = Character.toString(inputTag) + "image.png";
-				displayGate(newGate, buildImgName);
-				inputTag++;
-				//System.out.println(inputTag);
-				newGate.addJLabel(new JLabel("Active: "));
-				newGate.active.setText(String.valueOf(newGate.isActive()));
-				Dimension dim = newGate.active.getPreferredSize();
-				newGate.active.setBounds(newGate.getX(), newGate.getY()+30, dim.width, dim.height);
-				panel.add(newGate.active);
-				gateList.add(newGate);
 			}
 		});
 
 		JMenuItem removeGate = new JMenuItem("Remove Item");
 		removeGate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			/*	System.out.print("clicked gate: ");
-				System.out.println(parentGate);
-				System.out.print("parent of clicked gate: ");
-				System.out.println(parentGate.pGate);*/
+				
 				parentGate.removeGate();
-			/*	if(parentGate.pGate!=null){
-					parentGate.pGate.child1 = null;
-					parentGate.pGate.child2 = null;
-				}*/
 				
 				if(gateList.isEmpty()){
 					first = true;
@@ -499,8 +491,18 @@ class DigitalCircuitUI {
 			}
 
 		});
+		
+		JMenuItem removeGate = new JMenuItem("Remove Item");
+		removeGate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				parentGate.removeGate();
+			}
+		});
+		
 		inputMenu.add(ACTIVE);
 		inputMenu.add(INACTIVE);
+		inputMenu.add(removeGate);
 	}
 
 	public static void main(String[] args) {
