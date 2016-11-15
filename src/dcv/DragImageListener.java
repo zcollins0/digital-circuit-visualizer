@@ -48,7 +48,7 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 			jc.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY);
 			if(((Gate)jc).isInput()){
 				Input in = ((Input) jc);
-				in.active.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY+30);
+				in.activeLabel.setLocation(jc.getX()+e.getX()-DigitalCircuitUI.clickX, jc.getY()+e.getY()-DigitalCircuitUI.clickY+30);
 			}
 			
 		}	
