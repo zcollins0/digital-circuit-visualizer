@@ -1,6 +1,7 @@
 package dcv;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 // Abstract class to represent logic gates. 
@@ -19,6 +20,11 @@ public abstract class Gate extends JLabel{
 	Gate child2 = null;
 	Gate pGate = null;
 	JLabel connectorImg = null;
+	public LineComponent comp = null;
+	
+	int childoffsety;
+	int childoffsetx;
+	int parentoffsety;
 
 	public Gate(ImageIcon img){
 		super(img);
@@ -94,37 +100,24 @@ public abstract class Gate extends JLabel{
 		}
 	}
 
-	public void addConnector(Gate parent, Gate child){
-		/*	int startx = parent.getLocation().x;
-		int starty = parent.getLocation().y;
-		double offset = parent.getHeight()/3;
-		FileInputStream istream = null;
-		BufferedImage image = null;
-		try {
-			istream = new FileInputStream("verticalLine.png");
-		} catch (FileNotFoundException e1) {
-			System.out.println("File not found");
-			System.exit(0);
-		};
-		try {
-			image = ImageIO.read(istream);
-		} catch (IOException e1) {
-			System.out.println("Could not read image");
-			System.exit(0);
-		} 
-
-		Graphics2D g = (Graphics2D) image.getGraphics();
-		g.rotate(Math.toRadians(90), 0,0);
-		g.drawImage(image, 0, 0, null);
-		Image temp = image.getScaledInstance(10, 50, Image.SCALE_SMOOTH);
-		ImageIcon icon = new ImageIcon(temp);
-
-		JLabel label1 = new JLabel();
-		connectorImg = label1;
-		label1.setIcon(icon);
-		label1.setBounds(startx-5, starty-40, 10, 50);
-		DigitalCircuitUI.labels.add(label1);
-		DigitalCircuitUI.updateUI();*/
+	public void addConnector(Gate child){
+		int startx = this.getLocation().x;
+		int starty = this.getLocation().y;
+		int endx = child.getLocation().x;
+		int endy = child.getLocation().y;
+		this.childoffsety = child.getHeight()/2;
+		this.childoffsetx = child.getWidth();
+		System.out.println(this.childoffsetx);
+		this.parentoffsety = this.getHeight()/3;
+		child.comp = new LineComponent();
+		child.comp.setPreferredSize(new Dimension(500,500));
+		child.comp.setBounds(0,0,800,800);
+		
+		child.comp.addLine(startx, starty+parentoffsety, endx+childoffsetx, endy+childoffsety);
+		
+		DigitalCircuitUI.panel.add(child.comp);
+		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);
+		//DigitalCircuitUI.updateUI();
 	}
 
 

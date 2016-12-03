@@ -27,6 +27,7 @@ public class NOT extends Gate {
 		else {
 			// Note: never allow NOt gate to have bottom child
 			child1 = g;
+			child1.pGate = this;
 		}
 	}
 

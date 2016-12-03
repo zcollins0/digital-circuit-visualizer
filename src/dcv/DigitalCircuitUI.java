@@ -58,7 +58,15 @@ class DigitalCircuitUI {
 		}
 		panel.revalidate();
 		panel.repaint();
-
+		
+		for(Gate g: gateList){
+			if(g.child1 != null && g.child1.comp!=null){
+				g.child1.comp.setPreferredSize(new Dimension(500,500));
+				g.child1.comp.setBounds(0,0,800,800);
+				DigitalCircuitUI.panel.add(g.child1.comp);
+			}
+		}
+		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);
 	}
 
 	static void DoUI() {
@@ -278,8 +286,6 @@ class DigitalCircuitUI {
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-
-
 				AND newGate = new AND(null, null);
 				//if top level gate, set as new parentGate, otherwise call addChildGate on parentGate
 				if(!first){
@@ -287,7 +293,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "ANDimage.png");
-						parentGate.addConnector(parentGate, newGate);
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				

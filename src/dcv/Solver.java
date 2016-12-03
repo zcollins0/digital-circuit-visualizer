@@ -55,6 +55,7 @@ public class Solver {
 				break;
 			inputs.get(i).setActive(states[i]);
 		}
+		//TODO: this doesn't work right
 		if (i < inputs.size()) {
 			for (; i < inputs.size(); i++) {
 				inputs.get(i).setActive(false);
