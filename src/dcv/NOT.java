@@ -1,5 +1,7 @@
 package dcv;
 
+import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -34,5 +36,26 @@ public class NOT extends Gate {
 	@Override
 	public JLabel getLabel() {
 		return null;
+	}
+	
+	@Override
+	public void addConnector(Gate child){
+		int startx = this.getLocation().x;
+		int starty = this.getLocation().y;
+		int endx = child.getLocation().x;
+		int endy = child.getLocation().y;
+		this.childoffsety = child.getHeight()/2;
+		this.childoffsetx = child.getWidth();
+		System.out.println(this.childoffsetx);
+		this.parentoffsety = this.getHeight()/2;
+		child.comp = new LineComponent();
+		child.comp.setPreferredSize(new Dimension(500,500));
+		child.comp.setBounds(0,0,800,800);
+		
+		child.comp.addLine(startx, starty+parentoffsety, endx+childoffsetx, endy+childoffsety);
+		
+		DigitalCircuitUI.panel.add(child.comp);
+		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);
+		//DigitalCircuitUI.updateUI();
 	}
 }

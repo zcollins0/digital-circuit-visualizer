@@ -105,15 +105,25 @@ public abstract class Gate extends JLabel{
 		int starty = this.getLocation().y;
 		int endx = child.getLocation().x;
 		int endy = child.getLocation().y;
-		this.childoffsety = child.getHeight()/2;
-		this.childoffsetx = child.getWidth();
-		System.out.println(this.childoffsetx);
+		if(child.isInput()){
+			this.childoffsety = child.getHeight()/2-5;
+			this.childoffsetx = child.getWidth()-14;
+		}
+		else{
+			this.childoffsety = child.getHeight()/2;
+			this.childoffsetx = child.getWidth();
+		}
 		this.parentoffsety = this.getHeight()/3;
 		child.comp = new LineComponent();
 		child.comp.setPreferredSize(new Dimension(500,500));
 		child.comp.setBounds(0,0,800,800);
 		
-		child.comp.addLine(startx, starty+parentoffsety, endx+childoffsetx, endy+childoffsety);
+		if(child == this.child1){
+			child.comp.addLine(startx, starty+parentoffsety, endx+childoffsetx, endy+childoffsety);
+		}
+		else if(child == this.child2){
+			child.comp.addLine(startx, starty+parentoffsety*2, endx+childoffsetx, endy+childoffsety);
+		}
 		
 		DigitalCircuitUI.panel.add(child.comp);
 		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);

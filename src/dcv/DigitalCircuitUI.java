@@ -56,8 +56,6 @@ class DigitalCircuitUI {
 		for (JLabel l: labels){
 			panel.add(l);			
 		}
-		panel.revalidate();
-		panel.repaint();
 		
 		for(Gate g: gateList){
 			if(g.child1 != null && g.child1.comp!=null){
@@ -67,6 +65,9 @@ class DigitalCircuitUI {
 			}
 		}
 		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);
+		
+		panel.revalidate();
+		panel.repaint();
 	}
 
 	static void DoUI() {
@@ -154,9 +155,8 @@ class DigitalCircuitUI {
 						inputList.get(i).getLabel().setText(String.valueOf(inputList.get(i).isActive()));
 					}
 				}
-
-				panel.revalidate();
-				panel.repaint();
+				frame.add(panel);
+				//updateUI();
 
 			}
 
@@ -199,8 +199,8 @@ class DigitalCircuitUI {
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
 
 				panel.add(scrollPane);
-				panel.revalidate();
-				panel.repaint();	
+				frame.add(panel);
+				//updateUI();	
 			}
 
 		});
@@ -317,6 +317,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "ORimage.png");
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
@@ -340,6 +341,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "NOTimage.png");
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("NOT can only have 1 child");
 					}				
@@ -362,6 +364,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "NANDimage.png");
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
@@ -384,6 +387,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "NORimage.png");
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
@@ -406,6 +410,7 @@ class DigitalCircuitUI {
 					try {
 						parentGate.addChildGate(newGate);
 						displayGate(newGate, "XORimage.png");
+						parentGate.addConnector(newGate);
 					} catch (InvalidNodeException e1) {
 						System.out.println("Cannot add more than 2 children");
 					}				
@@ -428,11 +433,10 @@ class DigitalCircuitUI {
 				
 				try {
 					parentGate.addChildGate(newGate);
-					
 					//build the filename using the input tag
 					String buildImgName = Character.toString(inputTag) + "image.png";
 					displayGate(newGate, buildImgName);
-					
+					parentGate.addConnector(newGate);
 					//Add to inputList and increment the input tag
 					inputList.add(newGate);
 					inputTag++;

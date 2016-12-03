@@ -35,7 +35,15 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 			int y1=p.y+((Gate)jc).pGate.childoffsety;//+e.getY()-DigitalCircuitUI.clickY;
 			Point pDims = ((Gate)jc).pGate.getLocation();
 			int x2 = pDims.x;
-			int y2 = pDims.y+((Gate)jc).pGate.parentoffsety;
+			int y2;
+			
+			if((Gate) jc == ((Gate)jc).pGate.child1){
+				y2 = pDims.y+((Gate)jc).pGate.parentoffsety;
+			}
+			else{
+				y2 = pDims.y+((Gate)jc).pGate.parentoffsety*2;
+			}
+			
 			//System.out.println((Gate)jc);
 			//System.out.println(((Gate)jc).pGate);
 			((Gate)jc).comp.redrawLine(x1,y1,x2,y2);
