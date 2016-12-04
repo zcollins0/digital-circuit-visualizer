@@ -61,7 +61,7 @@ class DigitalCircuitUI {
 			if(g.child1 != null && g.child1.comp!=null){
 				g.child1.comp.setPreferredSize(new Dimension(500,500));
 				g.child1.comp.setBounds(0,0,800,800);
-				DigitalCircuitUI.panel.add(g.child1.comp);
+				panel.add(g.child1.comp);
 			}
 		}
 		frame.add(panel);
@@ -102,12 +102,9 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//delete the previous table
-				if(scrollPane!=null){
-					panel.remove(scrollPane);
-					scrollPane = null;
+				if(table!=null){
 					table = null;
-					panel.revalidate();
-					panel.repaint();
+					panel.remove(scrollPane);
 				}
 				
 				circ.giveSolver();
@@ -141,7 +138,8 @@ class DigitalCircuitUI {
 				cols[inputList.size()] = "Result";
 
 				table = new JTable(data, cols);
-				scrollPane = new JScrollPane(table);
+				scrollPane = new JScrollPane();
+				scrollPane.setViewportView(table);
 				
 				//Format the table and add it to the panel
 				Dimension tablesize = table.getPreferredSize();
@@ -175,12 +173,9 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//delete the old table
-				if(scrollPane!=null){
-					panel.remove(scrollPane);
-					scrollPane = null;
+				if(table!=null){
 					table = null;
-					panel.revalidate();
-					panel.repaint();
+					panel.remove(scrollPane);
 				}
 				circ.giveSolver();
 
@@ -200,7 +195,8 @@ class DigitalCircuitUI {
 				//format table
 				table = new JTable(data, cols);
 				table.setValueAt(res, 0, inputList.size());
-				scrollPane = new JScrollPane(table);
+				scrollPane = new JScrollPane();
+				scrollPane.setViewportView(table);
 				Dimension tablesize = table.getPreferredSize();
 				scrollPane.setBounds(280, 500, tablesize.width, tablesize.height+22);
 
