@@ -64,14 +64,14 @@ class DigitalCircuitUI {
 				DigitalCircuitUI.panel.add(g.child1.comp);
 			}
 		}
-		DigitalCircuitUI.frame.add(DigitalCircuitUI.panel);
+		frame.add(panel);
 		
 		panel.revalidate();
 		panel.repaint();
 	}
 
 	static void DoUI() {
-		// DoUI should initialize the UI, and call an update function.
+		// DoUI should initiaDigitalCircuitUI.lize the UI, and call an update function.
 		// The structure of the circuit should be a horizontal tree.
 		// Highest level node should go on the right.
 		// A Graphics2D might be the best way to implement this. We'll have to draw lines
@@ -102,10 +102,14 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//delete the previous table
-				if(table!=null){
+				if(scrollPane!=null){
 					panel.remove(scrollPane);
+					scrollPane = null;
+					table = null;
+					panel.revalidate();
+					panel.repaint();
 				}
-
+				
 				circ.giveSolver();
 				boolean[] res = circ.solver.solveAll();
 
@@ -156,8 +160,6 @@ class DigitalCircuitUI {
 					}
 				}
 				frame.add(panel);
-				//updateUI();
-
 			}
 
 		});
@@ -173,8 +175,12 @@ class DigitalCircuitUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//delete the old table
-				if(table!=null){
+				if(scrollPane!=null){
 					panel.remove(scrollPane);
+					scrollPane = null;
+					table = null;
+					panel.revalidate();
+					panel.repaint();
 				}
 				circ.giveSolver();
 
@@ -200,7 +206,6 @@ class DigitalCircuitUI {
 
 				panel.add(scrollPane);
 				frame.add(panel);
-				//updateUI();	
 			}
 
 		});

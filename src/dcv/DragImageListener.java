@@ -21,6 +21,26 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 		DigitalCircuitUI.clickX = e.getX();
 		DigitalCircuitUI.clickY = e.getY();
 	}
+	
+	public void updateLocation(Gate child){
+		Point p = child.getLocation();
+		int x1=p.x+child.pGate.childoffsetx;
+		int y1=p.y+child.pGate.childoffsety;
+		
+		Point pDims = child.pGate.getLocation();
+		int x2 = pDims.x;
+		int y2;
+		
+		if(child == child.pGate.child1){
+			y2 = pDims.y+child.pGate.parentoffsety;
+		}
+		else{
+			y2 = pDims.y+child.pGate.parentoffsety*2;
+		}
+		
+		child.comp.redrawLine(x1,y1,x2,y2);
+		DigitalCircuitUI.updateUI();
+	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -29,10 +49,8 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 		JComponent jc = (JComponent)e.getSource();
 		if(((Gate)jc).pGate!=null){
 			Point p = ((Gate)jc).getLocation();
-			Rectangle r = ((Gate)jc).comp.getDimensions();
-			int x1=p.x+((Gate)jc).pGate.childoffsetx;// +e.getX()-DigitalCircuitUI.clickX;
-			System.out.println(((Gate)jc).pGate.childoffsetx);
-			int y1=p.y+((Gate)jc).pGate.childoffsety;//+e.getY()-DigitalCircuitUI.clickY;
+			int x1=p.x+((Gate)jc).pGate.childoffsetx;
+			int y1=p.y+((Gate)jc).pGate.childoffsety;
 			Point pDims = ((Gate)jc).pGate.getLocation();
 			int x2 = pDims.x;
 			int y2;
@@ -43,13 +61,17 @@ public class DragImageListener extends JFrame implements MouseMotionListener, Mo
 			else{
 				y2 = pDims.y+((Gate)jc).pGate.parentoffsety*2;
 			}
-			
-			//System.out.println((Gate)jc);
-			//System.out.println(((Gate)jc).pGate);
+	
 			((Gate)jc).comp.redrawLine(x1,y1,x2,y2);
 			DigitalCircuitUI.updateUI();
-			System.out.println("(" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + ")");
 		}	
+		if(((Gate)jc).child1 != null){
+			updateLocation(((Gate)jc).child1);
+		}
+		if(((Gate)jc).child2 != null){
+			updateLocation(((Gate)jc).child2);
+		}
+		
 	}
 
 	@Override

@@ -61,6 +61,7 @@ public abstract class Gate extends JLabel{
 		//remove the child gates and set them to null
 		while(this.child1!=null){
 			this.child1.removeGate();
+			
 			this.child1 = null;
 		}
 
@@ -68,7 +69,10 @@ public abstract class Gate extends JLabel{
 			this.child2.removeGate();
 			this.child2 = null;
 		}
-
+		
+		LineComponent.lines.remove(this.comp);
+		this.comp = null;
+		
 		//remove the gate from gateList and remove the JLabels
 		DigitalCircuitUI.gateList.remove(this);
 		DigitalCircuitUI.labels.remove(this);
@@ -91,12 +95,14 @@ public abstract class Gate extends JLabel{
 		}
 		
 		//set the parent gate's child/children to null
-		if(this.pGate.child1 == this){
-			this.pGate.child1 = null;
-		}
-		
-		if(this.pGate.child2 == this){
-			this.pGate.child2 = null;
+		if(this.pGate != null){
+			if(this.pGate.child1 == this){
+				this.pGate.child1 = null;
+			}
+			
+			if(this.pGate.child2 == this){
+				this.pGate.child2 = null;
+			}
 		}
 	}
 
